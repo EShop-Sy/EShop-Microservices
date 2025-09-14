@@ -1,6 +1,7 @@
-using Basket.API.Endpoints;
-using Basket.API.Services;
 using BuildingBlocks.Authentication;
+using Catalog.API.Data;
+using Catalog.API.Endpoints;
+using Catalog.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,21 +20,22 @@ builder.Services
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddScoped<BasketService>();
+builder.AddAzureNpgsqlDbContext<ProductDbContext>(connectionName: "catalogdb");
 
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddScoped<ProductService>();
+
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
 app.UseAuthentication();
 
 app.UseAuthorization();
 
-// Configure the HTTP request pipeline.
 app.MapDefaultEndpoints();
 
-app.MapBasketEndpoints();
+app.MapProductEndpoints();
 
 if (app.Environment.IsDevelopment())
 {

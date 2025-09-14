@@ -3,11 +3,11 @@ using Basket.API.Services;
 
 namespace Basket.API.Endpoints;
 
-public static class BasketEndpoints
+public static class ShoppingCartEndpoints
 {
     public static void MapBasketEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("").RequireAuthorization();
+        var group = app.MapGroup("cart").WithGroupName("cart").RequireAuthorization();
 
         // GET by id
         group.MapGet("/{id:guid}", async (Guid id, BasketService service) =>
@@ -15,7 +15,7 @@ public static class BasketEndpoints
                 var cart = await service.GetBasket(id);
                 return cart is null ? Results.NotFound() : Results.Ok(cart);
             })
-            .WithName("GetBasketById")
+            .WithName("GetCartById")
             .Produces<ShoppingCart>()
             .ProducesProblem(StatusCodes.Status404NotFound);
     }

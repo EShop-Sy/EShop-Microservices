@@ -8,6 +8,15 @@
       "ApiKeySecret": {
         "value": "${AZURE_API_KEY_SECRET}"
       },
+      "KeyVaultName": {
+        "value": "${AZURE_KEY_VAULT_NAME}"
+      },
+      "PostgresName": {
+        "value": "${AZURE_POSTGRES_NAME}"
+      },
+      "ResourceGroup": {
+        "value": "${AZURE_RESOURCE_GROUP}"
+      },
       "environmentName": {
         "value": "${AZURE_ENV_NAME}"
       },

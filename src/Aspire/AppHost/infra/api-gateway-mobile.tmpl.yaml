@@ -34,12 +34,14 @@ properties:
             value: Development
           - name: REVERSEPROXY__CLUSTERS__cluster_basket__DESTINATIONS__destination1__ADDRESS
             value: https+http://basket
+          - name: REVERSEPROXY__CLUSTERS__cluster_catalog__DESTINATIONS__destination1__ADDRESS
+            value: https+http://catalog
           - name: REVERSEPROXY__ROUTES__route0__CLUSTERID
-            value: cluster_basket
+            value: cluster_catalog
           - name: REVERSEPROXY__ROUTES__route0__MATCH__PATH
-            value: /basket/{**catch-all}
+            value: /catalog/{**catch-all}
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__0__PathRemovePrefix
-            value: /basket
+            value: /catalog
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__Append
             value: gateway.eshop.sy.com
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__RequestHeader
@@ -50,10 +52,30 @@ properties:
             value: X-Powered-By
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__2__When
             value: Success
+          - name: REVERSEPROXY__ROUTES__route1__CLUSTERID
+            value: cluster_basket
+          - name: REVERSEPROXY__ROUTES__route1__MATCH__PATH
+            value: /basket/{**catch-all}
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__0__PathRemovePrefix
+            value: /basket
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__Append
+            value: gateway.eshop.sy.com
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__RequestHeader
+            value: X-Forwarded-Host
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__2__Append
+            value: YARP
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__2__ResponseHeader
+            value: X-Powered-By
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__2__When
+            value: Success
           - name: services__basket__http__0
             value: http://basket.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
           - name: services__basket__https__0
             value: https://basket.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: services__catalog__http__0
+            value: http://catalog.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: services__catalog__https__0
+            value: https://catalog.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
     scale:
       minReplicas: 1
 tags:

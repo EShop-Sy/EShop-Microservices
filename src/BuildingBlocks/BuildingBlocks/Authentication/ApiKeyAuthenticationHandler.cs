@@ -1,15 +1,17 @@
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Basket.API.Authentication;
+namespace BuildingBlocks.Authentication;
 
 public class ApiKeyAuthenticationHandler(
-    IOptionsMonitor<ApiKeyAuthenticationOptions> options,
     ILoggerFactory logger,
-    UrlEncoder encoder)
-    : AuthenticationHandler<ApiKeyAuthenticationOptions>(options, logger, encoder)
+    UrlEncoder encoder,
+    ISystemClock clock,
+    IOptionsMonitor<ApiKeyAuthenticationOptions> options)
+    : AuthenticationHandler<ApiKeyAuthenticationOptions>(options, logger, encoder, clock)
 {
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {

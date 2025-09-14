@@ -14,6 +14,14 @@ param principalId string = ''
 
 @secure()
 param ApiKeySecret string
+param KeyVaultName string
+param PostgresName string
+@metadata({azd: {
+  type: 'resourceGroup'
+  config: {}
+  }
+})
+param ResourceGroup string
 
 var tags = {
   'azd-env-name': environmentName
@@ -36,19 +44,38 @@ module resources 'resources.bicep' = {
 
 module key_vault 'key-vault/key-vault.module.bicep' = {
   name: 'key-vault'
-  scope: rg
+  scope: resourceGroup(ResourceGroup)
   params: {
+    KeyVaultName: KeyVaultName
     apikeysecret_value: ApiKeySecret
     location: location
   }
 }
 module key_vault_roles 'key-vault-roles/key-vault-roles.module.bicep' = {
   name: 'key-vault-roles'
-  scope: rg
+  scope: resourceGroup(ResourceGroup)
   params: {
     key_vault_outputs_name: key_vault.outputs.name
     location: location
     principalId: resources.outputs.MANAGED_IDENTITY_PRINCIPAL_ID
+    principalType: 'ServicePrincipal'
+  }
+}
+module postgres 'postgres/postgres.module.bicep' = {
+  name: 'postgres'
+  scope: rg
+  params: {
+    location: location
+  }
+}
+module postgres_roles 'postgres-roles/postgres-roles.module.bicep' = {
+  name: 'postgres-roles'
+  scope: rg
+  params: {
+    location: location
+    postgres_outputs_name: postgres.outputs.name
+    principalId: resources.outputs.MANAGED_IDENTITY_PRINCIPAL_ID
+    principalName: resources.outputs.MANAGED_IDENTITY_NAME
     principalType: 'ServicePrincipal'
   }
 }
@@ -63,3 +90,4 @@ output AZURE_CONTAINER_APPS_ENVIRONMENT_NAME string = resources.outputs.AZURE_CO
 output AZURE_CONTAINER_APPS_ENVIRONMENT_ID string = resources.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_ID
 output AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN string = resources.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
 output KEY_VAULT_VAULTURI string = key_vault.outputs.vaultUri
+output POSTGRES_CONNECTIONSTRING string = postgres.outputs.connectionString
