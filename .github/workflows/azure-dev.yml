@@ -8,7 +8,9 @@ on:
     # Set this to the mainline branch you are using
     branches:
       - feature/*
-
+  pull_request: 
+    branches:
+      - feature/*
 # Set up permissions for deploying with secretless Azure federated credentials
 # https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#set-up-azure-login-with-openid-connect-authentication
 permissions:
