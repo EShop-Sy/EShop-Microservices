@@ -14,9 +14,6 @@ param principalId string = ''
 
 @secure()
 param ApiKeySecret string
-param KeyVaultName string
-param PostgresName string
-param ResourceGroup string
 
 var tags = {
   'azd-env-name': environmentName

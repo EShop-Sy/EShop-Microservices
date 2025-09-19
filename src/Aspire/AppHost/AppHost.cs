@@ -4,28 +4,29 @@ using Microsoft.Extensions.Hosting;
 var builder = DistributedApplication.CreateBuilder(args);
 
 // Backing Services
-var rg = builder.AddParameter("ResourceGroup");
+// var rg = builder.AddParameter("ResourceGroup", "rg-dev");
 
 // Database
-var postgresName = builder.AddParameter("PostgresName");
+// var postgresName = builder.AddParameter("PostgresName", "postgres");
 
 var postgres = builder.AddAzurePostgresFlexibleServer("postgres");
 
-if (builder.Environment.IsDevelopment())
-{
-    postgres.RunAsContainer();
-}
-else
-{
-    postgres.AsExisting(postgresName, rg);
-}
+// if (builder.Environment.IsDevelopment())
+// {
+//     postgres.RunAsContainer();
+// }
+// else
+// {
+//     postgres.AsExisting(postgresName, rg);
+// }
 
 var catalogdb = postgres.AddDatabase("catalogdb");
 
 // Key Vault
-var keyVaultName = builder.AddParameter("KeyVaultName");
+// var keyVaultName = builder.AddParameter("KeyVaultName", "keyvault-c3bqwnyvzo3w4");
 
-var keyVault = builder.AddAzureKeyVault("key-vault").RunAsExisting(keyVaultName, rg);
+var keyVault = builder.AddAzureKeyVault("key-vault");
+// .AsExisting(keyVaultName, rg);
 
 var apiKey = builder.AddParameter("ApiKeySecret", secret: true);
 

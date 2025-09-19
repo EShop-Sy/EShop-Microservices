@@ -1,15 +1,11 @@
-name: Deploy 🚀
-
-# Run when commits are pushed to feature/*
+# Run when commits are pushed to feature/catalog
 on:
   workflow_dispatch:
   push:
+    # Run when commits are pushed to mainline branch (main or master)
+    # Set this to the mainline branch you are using
     branches:
-      - main
       - feature/catalog
-#  pull_request: 
-#    branches:
-#      - feature/*
 
 # Set up permissions for deploying with secretless Azure federated credentials
 # https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#set-up-azure-login-with-openid-connect-authentication
@@ -17,15 +13,19 @@ permissions:
   id-token: write
   contents: read
 
+
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     env:
       AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
       AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-      AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
       AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
+      AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
+      AZURE_KEY_VAULT_NAME: ${{ vars.AZURE_KEY_VAULT_NAME }}
+      AZURE_POSTGRES_NAME: ${{ vars.AZURE_POSTGRES_NAME }}
+      AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
