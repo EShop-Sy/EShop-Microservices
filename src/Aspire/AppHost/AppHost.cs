@@ -32,7 +32,7 @@ var apiKey = builder.AddParameter("ApiKeySecret", secret: true);
 keyVault.AddSecret("ApiKey", apiKey);
 
 // Projects
-var migrations = builder.AddProject<Projects.MigrationService>("migrations")
+var migrations = builder.AddProject<Projects.Catalog_API_MigrationService>("migrations")
     .WithReference(catalogdb)
     .WaitFor(catalogdb);
 // .WithParentRelationship(catalogdb);

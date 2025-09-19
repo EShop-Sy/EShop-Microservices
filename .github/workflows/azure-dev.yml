@@ -1,3 +1,5 @@
+name: Deploy 🚀
+
 # Run when commits are pushed to feature/catalog
 on:
   workflow_dispatch:
