@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppHost", "src\Aspire\AppHo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basket.API", "src\Services\Basket.API\Basket.API.csproj", "{24286A41-2B30-43AE-98DF-19CED482E5C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.API.MigrationService", "src\Services\Catalog.API.MigrationService\Catalog.API.MigrationService.csproj", "{3B6992A3-2379-403D-8595-6CD047C62348}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationService", "src\Services\MigrationService\MigrationService.csproj", "{3B6992A3-2379-403D-8595-6CD047C62348}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.API", "src\Services\Catalog.API\Catalog.API.csproj", "{FB15328B-6E71-4C13-8583-DE9786790FD5}"
 EndProject

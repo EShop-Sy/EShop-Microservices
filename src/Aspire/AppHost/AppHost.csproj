@@ -15,7 +15,7 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Services\Basket.API\Basket.API.csproj"/>
-        <ProjectReference Include="..\..\Services\Catalog.API.MigrationService\Catalog.API.MigrationService.csproj"/>
+        <ProjectReference Include="..\..\Services\MigrationService\MigrationService.csproj" />
         <ProjectReference Include="..\..\Services\Catalog.API\Catalog.API.csproj"/>
     </ItemGroup>
 </Project>

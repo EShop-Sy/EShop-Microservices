@@ -1,5 +1,4 @@
 using Aspire.Hosting.Yarp.Transforms;
-using Microsoft.Extensions.Hosting;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
@@ -33,10 +32,10 @@ var apiKey = builder.AddParameter("ApiKeySecret", secret: true);
 keyVault.AddSecret("ApiKey", apiKey);
 
 // Projects
-var migrations = builder.AddProject<Projects.Catalog_API_MigrationService>("migrations")
+var migrations = builder.AddProject<Projects.MigrationService>("migrations")
     .WithReference(catalogdb)
-    .WaitFor(catalogdb)
-    .WithParentRelationship(catalogdb);
+    .WaitFor(catalogdb);
+// .WithParentRelationship(catalogdb);
 
 var catalog = builder.AddProject<Projects.Catalog_API>("catalog")
     .WithReference(keyVault)
