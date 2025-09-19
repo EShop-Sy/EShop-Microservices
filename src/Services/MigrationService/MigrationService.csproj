@@ -4,8 +4,6 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <UserSecretsId>dotnet-Catalog.API.MigrationService-23d76e64-7765-4bb4-bba3-655db10de4e9</UserSecretsId>
-        <RootNamespace>Catalog.API.MigrationService</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
