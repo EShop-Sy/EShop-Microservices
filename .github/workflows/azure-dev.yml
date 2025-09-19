@@ -5,11 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
-  
-  pull_request:
-    branches:
-      - 'feature/**'
+      - feature/**
 
 # Set up permissions for deploying with secretless Azure federated credentials
 # https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#set-up-azure-login-with-openid-connect-authentication
@@ -18,7 +14,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     env:
       AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}

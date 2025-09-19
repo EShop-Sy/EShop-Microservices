@@ -2,11 +2,16 @@ name: .NET 🧱
 
 # This workflow will build a .NET project
 
+#on:
+#  push:
+#    branches: [ "main" ]
+#  pull_request:
+#    branches: [ "main" ]
+
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - 'feature/**'
 
 jobs:
   build:
