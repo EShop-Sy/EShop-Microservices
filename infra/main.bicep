@@ -16,11 +16,6 @@ param principalId string = ''
 param ApiKeySecret string
 param KeyVaultName string
 param PostgresName string
-@metadata({azd: {
-  type: 'resourceGroup'
-  config: {}
-  }
-})
 param ResourceGroup string
 
 var tags = {
@@ -44,16 +39,15 @@ module resources 'resources.bicep' = {
 
 module key_vault 'key-vault/key-vault.module.bicep' = {
   name: 'key-vault'
-  scope: resourceGroup(ResourceGroup)
+  scope: rg
   params: {
-    KeyVaultName: KeyVaultName
     apikeysecret_value: ApiKeySecret
     location: location
   }
 }
 module key_vault_roles 'key-vault-roles/key-vault-roles.module.bicep' = {
   name: 'key-vault-roles'
-  scope: resourceGroup(ResourceGroup)
+  scope: rg
   params: {
     key_vault_outputs_name: key_vault.outputs.name
     location: location

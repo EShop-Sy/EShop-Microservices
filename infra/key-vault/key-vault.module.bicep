@@ -1,13 +1,23 @@
 @description('The location for the resource(s) to be deployed.')
 param location string = resourceGroup().location
 
-param KeyVaultName string
-
 @secure()
 param apikeysecret_value string
 
-resource key_vault 'Microsoft.KeyVault/vaults@2024-11-01' existing = {
-  name: KeyVaultName
+resource key_vault 'Microsoft.KeyVault/vaults@2024-11-01' = {
+  name: take('keyvault-${uniqueString(resourceGroup().id)}', 24)
+  location: location
+  properties: {
+    tenantId: tenant().tenantId
+    sku: {
+      family: 'A'
+      name: 'standard'
+    }
+    enableRbacAuthorization: true
+  }
+  tags: {
+    'aspire-resource-name': 'key-vault'
+  }
 }
 
 resource secret_ApiKey 'Microsoft.KeyVault/vaults/secrets@2024-11-01' = {
@@ -20,4 +30,4 @@ resource secret_ApiKey 'Microsoft.KeyVault/vaults/secrets@2024-11-01' = {
 
 output vaultUri string = key_vault.properties.vaultUri
 
-output name string = KeyVaultName
+output name string = key_vault.name

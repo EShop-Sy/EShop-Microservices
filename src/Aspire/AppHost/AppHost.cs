@@ -25,7 +25,7 @@ var catalogdb = postgres.AddDatabase("catalogdb");
 // Key Vault
 var keyVaultName = builder.AddParameter("KeyVaultName");
 
-var keyVault = builder.AddAzureKeyVault("key-vault").AsExisting(keyVaultName, rg);
+var keyVault = builder.AddAzureKeyVault("key-vault").RunAsExisting(keyVaultName, rg);
 
 var apiKey = builder.AddParameter("ApiKeySecret", secret: true);
 
