@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches:
+      - main
       - feature/**
 
 # Set up permissions for deploying with secretless Azure federated credentials
