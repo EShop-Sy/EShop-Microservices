@@ -44,7 +44,6 @@ var catalog = builder.AddProject<Projects.Catalog_API>("catalog")
     .WaitFor(keyVault)
     .WaitFor(catalogdb)
     .WaitForCompletion(migrations);
-
 var basket = builder.AddProject<Projects.Basket_API>("basket")
     .WithReference(keyVault)
     .WaitFor(keyVault);
