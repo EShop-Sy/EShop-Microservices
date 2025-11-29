@@ -1,5 +1,3 @@
-using Basket.API.Repository;
-
 namespace Basket.API.Extensions;
 
 public static class Extensions
@@ -7,16 +5,13 @@ public static class Extensions
     public static TBuilder AddApiServices<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
         // Add Authentication Services
-        builder.Services.AddKeycloakAuthentication(builder.Environment);
+        builder.Services.AddKeycloakAuthentication(builder.Configuration, builder.Environment);
 
         // Add Database Services
-        builder.AddAzureNpgsqlDbContext<BasketDbContext>(connectionName: "basketdb");
+        builder.AddAzureNpgsqlDbContext<BasketDbContext>("basketdb");
 
         // Add Cache Services
-        builder.Services.AddStackExchangeRedisCache(options =>
-        {
-            options.Configuration = builder.Configuration.GetConnectionString("cache");
-        });
+        builder.AddRedisDistributedCache("cache");
 
         // Async Communication Services
         builder.Services.AddMessageBroker(builder.Configuration);
@@ -38,6 +33,9 @@ public static class Extensions
         builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
         builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
+
+        // Add Exception Handling
+        builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
         return builder;
     }

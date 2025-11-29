@@ -4,13 +4,17 @@ public class ShoppingCartItem
 {
     public Guid Id { get; set; }
 
-    public Guid ProductId { get; set; }
-
     public int Quantity { get; set; }
 
     public decimal PriceAtAddition { get; set; }
 
-    public Guid ShoppingCartId { get; set; } // Required foreign key property
+    #region Navigation Properties
 
-    public ShoppingCart ShoppingCart { get; set; } = null!; // Required reference navigation to principal
+    public Guid ShoppingCartId { get; set; }
+
+    public ShoppingCart ShoppingCart { get; set; } = null!;
+
+    public Guid ProductId { get; set; }
+
+    #endregion
 }

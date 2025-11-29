@@ -1,4 +1,5 @@
-﻿global using Carter;
+﻿global using Basket.API.Extensions;
+global using Carter;
 global using MediatR;
 global using Mapster;
 global using Basket.API.Models;
@@ -15,3 +16,5 @@ global using Microsoft.Extensions.Caching.Distributed;
 global using System.Text.Json;
 global using BuildingBlocks.Messaging.Events;
 global using MassTransit;
+global using Basket.API.Repository;
+global using BuildingBlocks.Exceptions.Handler;

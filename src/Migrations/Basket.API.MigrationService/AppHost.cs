@@ -1,14 +1,10 @@
-using Basket.API.Data;
-using Basket.API.MigrationService;
-using ServiceDefaults;
-
 var builder = Host.CreateApplicationBuilder(args);
 
 builder.AddServiceDefaults();
 
-builder.Services.AddHostedService<BasketDbInitializer>();
+builder.Services.AddHostedService<DbInitializer>();
 
-builder.Services.AddOpenTelemetry().WithTracing(tracing => tracing.AddSource(BasketDbInitializer.ActivitySourceName));
+builder.Services.AddOpenTelemetry().WithTracing(tracing => tracing.AddSource(DbInitializer.ActivitySourceName));
 
 builder.AddAzureNpgsqlDbContext<BasketDbContext>(connectionName: "basketdb");
 
