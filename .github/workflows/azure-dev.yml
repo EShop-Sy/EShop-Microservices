@@ -46,7 +46,9 @@ jobs:
 
 
       - name: Provision Infrastructure
-        run: azd provision --no-prompt
+        run: |
+          azd config set alpha.azd.operations on
+          azd provision --no-prompt
         env:
           AZURE_KEYCLOAK_PASSWORD: ${{ secrets.AZURE_KEYCLOAK_PASSWORD }}
           AZURE_KEYCLOAK_CLIENT_SECRET: ${{ secrets.AZURE_KEYCLOAK_CLIENT_SECRET }}
