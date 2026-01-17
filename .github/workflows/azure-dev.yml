@@ -43,7 +43,6 @@ jobs:
             --tenant-id "$Env:AZURE_TENANT_ID"
         shell: pwsh
 
-
       - name: Provision Infrastructure
         run: |
           azd config set alpha.azd.operations on
