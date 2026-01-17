@@ -4,38 +4,87 @@ public static class Extensions
 {
     public static TBuilder AddApiServices<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
-        // Add Authentication Services
-        builder.Services.AddKeycloakAuthentication(builder.Configuration, builder.Environment);
+        builder.AddKeycloak();
 
-        // Add Database Services
-        builder.AddAzureNpgsqlDbContext<BasketDbContext>("basketdb");
+        builder.AddEndpoints();
 
-        // Add Cache Services
-        builder.AddRedisDistributedCache("cache");
+        builder.AddCQRS();
 
-        // Async Communication Services
-        builder.Services.AddMessageBroker(builder.Configuration);
+        builder.AddDocumentDb();
 
-        // Add API Services
+        builder.AddDataServices();
+
+        builder.AddRedisCache();
+
+        builder.AddBroker();
+
+        builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
+        return builder;
+    }
+
+    private static TBuilder AddEndpoints<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+    {
         builder.Services.AddCarter();
 
-        // Add MediatR Services
+        return builder;
+    }
+
+    private static TBuilder AddCQRS<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+    {
         var assembly = typeof(Program).Assembly;
 
         builder.Services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssembly(assembly);
+
             config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+
             config.AddOpenBehavior(typeof(LoggingBehavior<,>));
         });
 
-        // Add Repositories
+        builder.Services.AddValidatorsFromAssembly(assembly);
+
+        return builder;
+    }
+
+    private static TBuilder AddDocumentDb<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+    {
+        builder.AddNpgsqlDataSource("basketdb");
+
+        builder.Services.AddMarten(opts =>
+            {
+                opts.DatabaseSchemaName = "basketdb";
+
+                opts.AutoCreateSchemaObjects = AutoCreate.All;
+
+                opts.Policies.ForAllDocuments(m =>
+                {
+                    if (m.IdType == typeof(Guid))
+                    {
+                        m.IdStrategy = new SequentialGuidIdGeneration();
+                    }
+                });
+            })
+            .UseLightweightSessions()
+            .UseNpgsqlDataSource()
+            .ApplyAllDatabaseChangesOnStartup();
+
+        return builder;
+    }
+
+    private static TBuilder AddDataServices<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+    {
         builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
         builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 
-        // Add Exception Handling
-        builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+        return builder;
+    }
+
+    private static TBuilder AddRedisCache<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+    {
+        builder.AddRedisDistributedCache("cache");
 
         return builder;
     }
@@ -43,6 +92,10 @@ public static class Extensions
     public static WebApplication UseApiServices(this WebApplication app)
     {
         app.MapCarter();
+
+        app.UseExceptionHandler(_ => { });
+
+        app.MapDefaultEndpoints();
 
         return app;
     }

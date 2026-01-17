@@ -1,4 +1,4 @@
-﻿namespace Basket.API.Repository;
+﻿namespace Basket.API.Data;
 
 public class CachedBasketRepository(IBasketRepository repository, IDistributedCache cache) : IBasketRepository
 {

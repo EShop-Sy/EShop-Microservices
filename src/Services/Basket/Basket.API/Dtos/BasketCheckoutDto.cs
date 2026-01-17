@@ -2,14 +2,13 @@
 
 public class BasketCheckoutDto
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
-    // shipping address
     public string FirstName { get; set; } = null!;
 
     public string LastName { get; set; } = null!;
 
     public string PhoneNumber { get; set; } = null!;
 
-    public required string AddressLine { get; set; }
+    public string AddressLine { get; set; } = null!;
 }

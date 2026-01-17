@@ -1,28 +1,28 @@
-﻿using Basket.API.Repository;
+﻿namespace Basket.API.Basket.CheckoutBasket;
 
-namespace Basket.API.Basket.CheckoutBasket;
+public record CheckoutBasketCommand(BasketCheckoutDto Cart) : ICommand<CheckoutBasketResult>;
 
-public record CheckoutBasketCommand(BasketCheckoutDto BasketCheckoutDto) : ICommand<CheckoutBasketResult>;
-
-public record CheckoutBasketResult;
+public record CheckoutBasketResult(Guid Id);
 
 public class CheckoutBasketHandler(IBasketRepository repository, IPublishEndpoint publishEndpoint)
     : ICommandHandler<CheckoutBasketCommand, CheckoutBasketResult>
 {
     public async Task<CheckoutBasketResult> Handle(CheckoutBasketCommand command, CancellationToken cancellationToken)
     {
-        var basket = await repository.GetBasket(command.BasketCheckoutDto.Id, cancellationToken);
+        var basket = await repository.GetBasket(command.Cart.Id, cancellationToken);
 
-        var eventMessage = command.BasketCheckoutDto.Adapt<BasketCheckoutEvent>();
+        var data = command.Cart.Adapt<BasketCheckoutEventData>();
 
-        eventMessage.TotalPrice = basket.TotalPrice;
+        data.Items = basket.Items.Adapt<List<Item>>();
 
-        eventMessage.Items = basket.Items.Adapt<List<Item>>();
+        data.TotalPrice = basket.TotalPrice;
+
+        var eventMessage = new BasketCheckoutEvent(data);
 
         await publishEndpoint.Publish(eventMessage, cancellationToken);
 
-        await repository.DeleteBasket(command.BasketCheckoutDto.Id, cancellationToken);
+        await repository.DeleteBasket(command.Cart.Id, cancellationToken);
 
-        return new CheckoutBasketResult();
+        return new CheckoutBasketResult(command.Cart.Id);
     }
 }

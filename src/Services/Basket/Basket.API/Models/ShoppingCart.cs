@@ -4,7 +4,17 @@ public class ShoppingCart
 {
     public Guid Id { get; init; }
 
-    public ICollection<ShoppingCartItem> Items { get; } = new List<ShoppingCartItem>();
+    #region Navigation Properties
 
-    public decimal TotalPrice => Items.Sum(i => i.PriceAtAddition * i.Quantity);
+    public Guid CustomerId { get; init; }
+
+    public ICollection<ShoppingCartItem> Items { get; init; } = new List<ShoppingCartItem>();
+
+    #endregion
+
+    #region Computed Properties
+
+    public decimal TotalPrice => Items.Sum(i => i.Price * i.Quantity);
+
+    #endregion
 }

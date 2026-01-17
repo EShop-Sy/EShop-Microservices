@@ -1,23 +1,28 @@
 ﻿namespace Basket.API.Basket.CheckoutBasket;
 
-public record CheckoutBasketRequest(BasketCheckoutDto BasketCheckoutDto);
+public record CheckoutBasketRequest(BasketCheckoutDto Cart);
+
+public record CheckoutBasketResponse(Guid Id);
 
 public class CheckoutBasketEndpoints : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/basket/checkout", async (CheckoutBasketRequest request, ISender sender) =>
+        app.MapPost("/checkout", async (CheckoutBasketRequest request, ISender sender) =>
             {
                 var command = request.Adapt<CheckoutBasketCommand>();
 
-                await sender.Send(command);
+                var result = await sender.Send(command);
 
-                return Results.Created("/basket/checkout", command);
+                var response = result.Adapt<CheckoutBasketResponse>();
+
+                return Results.Created($"/checkout/{response.Id}", response);
             })
             .WithName("CheckoutBasket")
             .WithSummary("Checkout Basket")
             .WithDescription("Checkout Basket")
             .Produces(StatusCodes.Status201Created)
+            .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .RequireAuthorization();
     }

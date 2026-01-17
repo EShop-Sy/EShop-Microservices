@@ -9,10 +9,6 @@ builder.AddApiServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.UseExceptionHandler(_ => { });
-
 app.UseApiServices();
-
-app.MapDefaultEndpoints();
 
 await app.RunAsync();
