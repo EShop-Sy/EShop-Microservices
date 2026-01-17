@@ -6,12 +6,12 @@ using Microsoft.Extensions.Logging;
 
 namespace BuildingBlocks.Exceptions.Handler;
 
-public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger) : IExceptionHandler
+public partial class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger) : IExceptionHandler
 {
-    public async ValueTask<bool> TryHandleAsync(HttpContext context, Exception exception,
+    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception,
         CancellationToken cancellationToken)
     {
-        logger.LogError("Error Message: {exceptionMessage}, Time {time}", exception.Message, DateTime.UtcNow);
+        LogErrorMessage(logger, exception.Message, DateTime.UtcNow);
 
         (string Detail, string Title, int StatusCode) details = exception switch
         {
@@ -19,31 +19,31 @@ public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger) : IE
             (
                 exception.Message,
                 exception.GetType().Name,
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError
+                httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError
             ),
             ValidationException =>
             (
                 exception.Message,
                 exception.GetType().Name,
-                context.Response.StatusCode = StatusCodes.Status400BadRequest
+                httpContext.Response.StatusCode = StatusCodes.Status400BadRequest
             ),
             BadRequestException =>
             (
                 exception.Message,
                 exception.GetType().Name,
-                context.Response.StatusCode = StatusCodes.Status400BadRequest
+                httpContext.Response.StatusCode = StatusCodes.Status400BadRequest
             ),
             NotFoundException =>
             (
                 exception.Message,
                 exception.GetType().Name,
-                context.Response.StatusCode = StatusCodes.Status404NotFound
+                httpContext.Response.StatusCode = StatusCodes.Status404NotFound
             ),
             _ =>
             (
                 exception.Message,
                 exception.GetType().Name,
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError
+                httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError
             )
         };
 
@@ -52,18 +52,21 @@ public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger) : IE
             Title = details.Title,
             Detail = details.Detail,
             Status = details.StatusCode,
-            Instance = context.Request.Path
+            Instance = httpContext.Request.Path
         };
 
-        problemDetails.Extensions.Add("traceId", context.TraceIdentifier);
+        problemDetails.Extensions.Add("traceId", httpContext.TraceIdentifier);
 
         if (exception is ValidationException validationException)
         {
             problemDetails.Extensions.Add("ValidationErrors", validationException.Errors);
         }
 
-        await context.Response.WriteAsJsonAsync(problemDetails, cancellationToken: cancellationToken);
+        await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken: cancellationToken);
 
         return true;
     }
+
+    [LoggerMessage(LogLevel.Error, "Error Message: {exceptionMessage}, Time {time}")]
+    static partial void LogErrorMessage(ILogger<CustomExceptionHandler> logger, string exceptionMessage, DateTime time);
 }

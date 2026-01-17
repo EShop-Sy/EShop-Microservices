@@ -2,13 +2,17 @@
   "version": 2,
   "dependencies": {
     "net10.0": {
-      "Aspire.Npgsql": {
+      "Aspire.Azure.Npgsql": {
         "type": "Direct",
         "requested": "[13.1.0, )",
         "resolved": "13.1.0",
-        "contentHash": "TaxFv4W11jqDoA8KHzJsaQ5PlAOHQfYCv0PqOt2nn6rPlcT+KZuzBSnAVlKQ1M5+nW2T9D+Zdi9vhXvPVz2R/w==",
+        "contentHash": "A9ds1iwrFwOOQghuxtldf8GJWvOr1PJA+PrawVYkvz+VNmRSLNywM2dln9pcuN/YA7bSpffulWQGH90zngKERQ==",
         "dependencies": {
           "AspNetCore.HealthChecks.NpgSql": "9.0.0",
+          "Aspire.Npgsql": "13.1.0",
+          "Azure.Core": "1.50.0",
+          "Azure.Identity": "1.17.0",
+          "Microsoft.Extensions.Azure": "1.13.0",
           "Npgsql.DependencyInjection": "10.0.0",
           "Npgsql.OpenTelemetry": "10.0.0",
           "OpenTelemetry.Extensions.Hosting": "1.14.0"
@@ -54,6 +58,15 @@
           "Weasel.Postgresql": "8.4.1"
         }
       },
+      "Microsoft.AspNetCore.OpenApi": {
+        "type": "Direct",
+        "requested": "[10.0.2, )",
+        "resolved": "10.0.2",
+        "contentHash": "YuEjUNpsoZLs0I5ONt013Z+Udsz3f9sPUh1Xm59LN7+/Z8oVG/swCUYLBbANtfreiunWnoT2uk+5kst4s2jr3Q==",
+        "dependencies": {
+          "Microsoft.OpenApi": "2.0.0"
+        }
+      },
       "Scrutor": {
         "type": "Direct",
         "requested": "[7.0.0, )",
@@ -61,17 +74,6 @@
         "contentHash": "wHWaroody48jnlLoq/REwUltIFLxplXyHTP+sttrc8P7+jkiVqf38afDidJNv4qgD/6zz2NKOYg06xLZ1bG7wQ==",
         "dependencies": {
           "Microsoft.Extensions.DependencyModel": "10.0.0"
-        }
-      },
-      "Aspire.StackExchange.Redis": {
-        "type": "Transitive",
-        "resolved": "13.1.0",
-        "contentHash": "//ovDYL0ehoVho+omWveScCrjkEOkzDxITXWqKfyF+02cpEj+u1kMLWr/0+huUzCbdS2RVZreNDHOXGlc2XGLg==",
-        "dependencies": {
-          "AspNetCore.HealthChecks.Redis": "9.0.0",
-          "Microsoft.Extensions.DependencyInjection.AutoActivation": "10.1.0",
-          "OpenTelemetry.Extensions.Hosting": "1.14.0",
-          "StackExchange.Redis": "2.9.32"
         }
       },
       "AspNetCore.HealthChecks.NpgSql": {
@@ -525,6 +527,11 @@
           "Microsoft.IdentityModel.Logging": "8.14.0"
         }
       },
+      "Microsoft.OpenApi": {
+        "type": "Transitive",
+        "resolved": "2.0.0",
+        "contentHash": "GGYLfzV/G/ct80OZ45JxnWP7NvMX1BCugn/lX7TH5o0lcVaviavsLMTxmFV2AybXWjbi3h6FF1vgZiTK6PXndw=="
+      },
       "NetTopologySuite": {
         "type": "Transitive",
         "resolved": "2.5.0",
@@ -747,7 +754,6 @@
           "FluentValidation.AspNetCore": "[11.3.1, )",
           "FluentValidation.DependencyInjectionExtensions": "[12.1.1, )",
           "Mapster": "[9.0.0-pre01, )",
-          "Marten": "[8.17.0, )",
           "MassTransit": "[9.0.0-develop.33, )",
           "MediatR": "[14.0.0, )",
           "Microsoft.EntityFrameworkCore": "[10.0.1, )",
@@ -796,6 +802,30 @@
           "Microsoft.Extensions.Azure": "1.13.0",
           "Microsoft.Extensions.Configuration.AzureAppConfiguration": "8.4.0",
           "OpenTelemetry.Extensions.Hosting": "1.14.0"
+        }
+      },
+      "Aspire.Npgsql": {
+        "type": "CentralTransitive",
+        "requested": "[13.1.0, )",
+        "resolved": "13.1.0",
+        "contentHash": "TaxFv4W11jqDoA8KHzJsaQ5PlAOHQfYCv0PqOt2nn6rPlcT+KZuzBSnAVlKQ1M5+nW2T9D+Zdi9vhXvPVz2R/w==",
+        "dependencies": {
+          "AspNetCore.HealthChecks.NpgSql": "9.0.0",
+          "Npgsql.DependencyInjection": "10.0.0",
+          "Npgsql.OpenTelemetry": "10.0.0",
+          "OpenTelemetry.Extensions.Hosting": "1.14.0"
+        }
+      },
+      "Aspire.StackExchange.Redis": {
+        "type": "CentralTransitive",
+        "requested": "[13.1.0, )",
+        "resolved": "13.1.0",
+        "contentHash": "//ovDYL0ehoVho+omWveScCrjkEOkzDxITXWqKfyF+02cpEj+u1kMLWr/0+huUzCbdS2RVZreNDHOXGlc2XGLg==",
+        "dependencies": {
+          "AspNetCore.HealthChecks.Redis": "9.0.0",
+          "Microsoft.Extensions.DependencyInjection.AutoActivation": "10.1.0",
+          "OpenTelemetry.Extensions.Hosting": "1.14.0",
+          "StackExchange.Redis": "2.9.32"
         }
       },
       "FluentValidation": {

@@ -1,13 +1,16 @@
-﻿namespace BuildingBlocks.Pagination;
+﻿using System.Text.Json.Serialization;
 
-public class PaginatedResult<TEntity>(Guid lastId, int pageSize, long count, IEnumerable<TEntity> data)
+namespace BuildingBlocks.Pagination;
+
+[method: JsonConstructor]
+public class PaginatedResult<TEntity>(int? pageNumber, long pageSize, long total, IReadOnlyList<TEntity> data)
     where TEntity : class
 {
-    public Guid LastId { get; } = lastId;
+    [JsonPropertyName("lastId")] public int? PageNumber { get; init; } = pageNumber;
 
-    public int PageSize { get; } = pageSize;
+    [JsonPropertyName("pageSize")] public long PageSize { get; init; } = pageSize;
 
-    public long Count { get; } = count;
+    [JsonPropertyName("total")] public long Total { get; init; } = total;
 
-    public IEnumerable<TEntity> Data { get; } = data;
+    [JsonPropertyName("data")] public IReadOnlyList<TEntity> Data { get; init; } = data;
 }

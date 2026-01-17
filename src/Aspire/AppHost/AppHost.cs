@@ -1,70 +1,52 @@
-using Aspire.Hosting.Yarp.Transforms;
+using AppHost.Extensions;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-// Backing Services
-// var rg = builder.AddParameter("ResourceGroup", "rg-dev");
+// Backing Services (Redis, RabbitMQ, etc.)
+// Cache
+var cache = builder.AddAzureManagedRedis("cache")
+    .RunAsContainer(resourceBuilder => resourceBuilder.WithContainerName("eshop-cache"))
+    .WithClearCommand()
+    .WithIconName("StackFilled");
 
-// Database
-// var postgresName = builder.AddParameter("PostgresName", "postgres");
+// Databases
+var databases = builder.AddAzurePostgresFlexibleServer("postgres")
+    .RunAsContainer(resourceBuilder => resourceBuilder.WithContainerName("eshop-postgres"))
+    .WithDatabases();
 
-var postgres = builder.AddAzurePostgresFlexibleServer("postgres");
+// RabbitMQ
+var username = builder.AddParameter("RabbitMQUserName", secret: true);
+var password = builder.AddParameter("RabbitMQPassword", secret: true);
+var rabbitmq = builder
+    .AddRabbitMQ("messaging", username, password, 5672)
+    .WithContainerName("eshop-rabbitmq")
+    .WithManagementPlugin()
+    .WithIconName("Connected");
 
-// if (builder.Environment.IsDevelopment())
-// {
-//     postgres.RunAsContainer();
-// }
-// else
-// {
-//     postgres.AsExisting(postgresName, rg);
-// }
-
-var catalogdb = postgres.AddDatabase("catalogdb");
-
-// Key Vault
-// var keyVaultName = builder.AddParameter("KeyVaultName", "keyvault-c3bqwnyvzo3w4");
-
-var keyVault = builder.AddAzureKeyVault("key-vault");
-// .AsExisting(keyVaultName, rg);
-
-var apiKey = builder.AddParameter("ApiKeySecret", secret: true);
-
-keyVault.AddSecret("ApiKey", apiKey);
+// Authentication
+var secret = builder.AddParameter("KeycloakClientSecret", secret: true);
+var keycloak = builder.AddKeycloak("keycloak")
+    .WithRealmImport("./realms")
+    .WithEnvironment("CLIENT_SECRET", secret)
+    .WithOtlpExporter()
+    .WithIconName("KeyMultiple");
 
 // Projects
-var migrations = builder.AddProject<Projects.Catalog_API_MigrationService>("migrations")
-    .WithReference(catalogdb)
-    .WaitFor(catalogdb);
-// .WithParentRelationship(catalogdb);
+var basket = builder.AddProject<Projects.Basket_API>("Basket")
+    .WithReferences([keycloak])
+    .WithReferences([databases.BasketDb, cache, rabbitmq])
+    .WithHttpHealthCheck("/health")
+    .WithIconName("Cart");
 
-var catalog = builder.AddProject<Projects.Catalog_API>("catalog")
-    .WithReference(keyVault)
-    .WithReference(catalogdb)
-    .WithReference(migrations)
-    .WaitFor(keyVault)
-    .WaitFor(catalogdb)
-    .WaitForCompletion(migrations);
-var basket = builder.AddProject<Projects.Basket_API>("basket")
-    .WithReference(keyVault)
-    .WaitFor(keyVault);
-
-// Reverse Proxy
-builder.AddYarp("api-gateway-mobile").WithConfiguration(yarp =>
-    {
-        var catalogcluster = yarp.AddCluster(catalog);
-
-        yarp.AddRoute("/catalog/{**catch-all}", catalogcluster)
-            .WithTransformPathRemovePrefix("/catalog")
-            .WithTransformRequestHeader("X-Forwarded-Host", "gateway.eshop.sy.com")
-            .WithTransformResponseHeader("X-Powered-By", "YARP");
-
-        var basketcluster = yarp.AddCluster(basket);
-
-        yarp.AddRoute("/basket/{**catch-all}", basketcluster)
-            .WithTransformPathRemovePrefix("/basket")
-            .WithTransformRequestHeader("X-Forwarded-Host", "gateway.eshop.sy.com")
-            .WithTransformResponseHeader("X-Powered-By", "YARP");
-    })
-    .WithExternalHttpEndpoints();
+// API Gateway
+builder.AddYarp("api-gateway-mobile")
+    .WithSettings(
+        new Dictionary<string, IResourceBuilder<IResourceWithServiceDiscovery>>
+        {
+            { "basket", basket }, { "keycloak", keycloak }
+        })
+    .WaitForStart(keycloak)
+    .WaitForStart(basket)
+    .WithIconName("ArrowSplit");
 
 await builder.Build().RunAsync();

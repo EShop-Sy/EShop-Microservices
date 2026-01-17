@@ -4,6 +4,8 @@ public static class Extensions
 {
     public static TBuilder AddApiServices<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
+        builder.AddOpenApi();
+
         builder.AddKeycloak();
 
         builder.AddEndpoints();
@@ -19,6 +21,13 @@ public static class Extensions
         builder.AddBroker();
 
         builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
+        return builder;
+    }
+
+    private static TBuilder AddOpenApi<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+    {
+        builder.Services.AddOpenApi();
 
         return builder;
     }
@@ -50,7 +59,7 @@ public static class Extensions
 
     private static TBuilder AddDocumentDb<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
-        builder.AddNpgsqlDataSource("basketdb");
+        builder.AddAzureNpgsqlDataSource("basketdb");
 
         builder.Services.AddMarten(opts =>
             {
@@ -91,6 +100,11 @@ public static class Extensions
 
     public static WebApplication UseApiServices(this WebApplication app)
     {
+        if (app.Environment.IsDevelopment())
+        {
+            app.MapOpenApi();
+        }
+
         app.MapCarter();
 
         app.UseExceptionHandler(_ => { });

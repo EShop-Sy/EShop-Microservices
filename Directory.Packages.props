@@ -7,10 +7,12 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
+    <PackageVersion Include="Aspire.Azure.Npgsql" Version="13.1.0"/>
     <PackageVersion Include="Aspire.Azure.Security.KeyVault" Version="13.0.0"/>
     <PackageVersion Include="Aspire.Azure.Storage.Blobs" Version="13.1.0"/>
     <PackageVersion Include="Aspire.Hosting.AppHost" Version="13.1.0"/>
     <PackageVersion Include="Aspire.Hosting.Azure.PostgreSQL" Version="13.1.0"/>
+    <PackageVersion Include="Aspire.Hosting.Azure.Redis" Version="13.1.0"/>
     <PackageVersion Include="Aspire.Hosting.Azure.Storage" Version="13.1.0"/>
     <PackageVersion Include="Aspire.Hosting.Keycloak" Version="13.1.0-preview.1.25616.3"/>
     <PackageVersion Include="Aspire.Hosting.Kubernetes" Version="13.1.0-preview.1.25616.3"/>
@@ -22,6 +24,7 @@
     <PackageVersion Include="Aspire.Microsoft.Extensions.Configuration.AzureAppConfiguration" Version="13.1.0"/>
     <PackageVersion Include="Aspire.Npgsql" Version="13.1.0"/>
     <PackageVersion Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="13.1.0"/>
+    <PackageVersion Include="Aspire.StackExchange.Redis" Version="13.1.0"/>
     <PackageVersion Include="Aspire.StackExchange.Redis.DistributedCaching" Version="13.1.0"/>
     <PackageVersion Include="Bogus" Version="35.6.5"/>
     <PackageVersion Include="Carter" Version="10.0.0"/>
@@ -39,7 +42,7 @@
     <PackageVersion Include="MassTransit.RabbitMQ" Version="9.0.0-develop.28"/>
     <PackageVersion Include="MediatR" Version="14.0.0"/>
     <PackageVersion Include="Microsoft.AspNetCore.Authentication" Version="2.3.0"/>
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.1"/>
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2"/>
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="5.0.0"/>
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.0.0"/>
     <PackageVersion Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="5.0.0"/>

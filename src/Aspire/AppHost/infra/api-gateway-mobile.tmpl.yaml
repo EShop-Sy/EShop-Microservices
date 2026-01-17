@@ -13,10 +13,10 @@ properties:
       dotnet:
         autoConfigureDataProtection: true
     ingress:
-      external: true
+      external: false
       targetPort: 5000
       transport: http
-      allowInsecure: false
+      allowInsecure: true
     registries:
       - server: {{ .Env.AZURE_CONTAINER_REGISTRY_ENDPOINT }}
         identity: {{ .Env.AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID }}
@@ -32,16 +32,24 @@ properties:
             value: {{ .Env.MANAGED_IDENTITY_CLIENT_ID }}
           - name: ASPNETCORE_ENVIRONMENT
             value: Development
-          - name: REVERSEPROXY__CLUSTERS__cluster_basket__DESTINATIONS__destination1__ADDRESS
-            value: https+http://basket
-          - name: REVERSEPROXY__CLUSTERS__cluster_catalog__DESTINATIONS__destination1__ADDRESS
-            value: https+http://catalog
+          - name: BASKET_HTTP
+            value: http://Basket.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: BASKET_HTTPS
+            value: https://Basket.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: KEYCLOAK_HTTP
+            value: http://keycloak.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: KEYCLOAK_MANAGEMENT
+            value: http://keycloak:9000
+          - name: REVERSEPROXY__CLUSTERS__cluster_Basket__DESTINATIONS__destination1__ADDRESS
+            value: https+http://Basket
+          - name: REVERSEPROXY__CLUSTERS__cluster_keycloak__DESTINATIONS__destination1__ADDRESS
+            value: http://keycloak
           - name: REVERSEPROXY__ROUTES__route0__CLUSTERID
-            value: cluster_catalog
+            value: cluster_Basket
           - name: REVERSEPROXY__ROUTES__route0__MATCH__PATH
-            value: /catalog/{**catch-all}
-          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__0__PathRemovePrefix
-            value: /catalog
+            value: /basket/{**catch-all}
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__0__PathPattern
+            value: /{**catch-all}
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__Append
             value: gateway.eshop.sy.com
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__RequestHeader
@@ -53,11 +61,11 @@ properties:
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__2__When
             value: Success
           - name: REVERSEPROXY__ROUTES__route1__CLUSTERID
-            value: cluster_basket
+            value: cluster_keycloak
           - name: REVERSEPROXY__ROUTES__route1__MATCH__PATH
-            value: /basket/{**catch-all}
-          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__0__PathRemovePrefix
-            value: /basket
+            value: /keycloak/{**catch-all}
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__0__PathPattern
+            value: /{**catch-all}
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__Append
             value: gateway.eshop.sy.com
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__RequestHeader
@@ -68,14 +76,14 @@ properties:
             value: X-Powered-By
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__2__When
             value: Success
-          - name: services__basket__http__0
-            value: http://basket.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
-          - name: services__basket__https__0
-            value: https://basket.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
-          - name: services__catalog__http__0
-            value: http://catalog.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
-          - name: services__catalog__https__0
-            value: https://catalog.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: services__Basket__http__0
+            value: http://Basket.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: services__Basket__https__0
+            value: https://Basket.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: services__keycloak__http__0
+            value: http://keycloak.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: services__keycloak__management__0
+            value: http://keycloak:9000
     scale:
       minReplicas: 1
 tags:

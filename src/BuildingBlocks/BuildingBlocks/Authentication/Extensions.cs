@@ -1,33 +1,35 @@
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace BuildingBlocks.Authentication;
 
+// Add Authentication Services
 public static class Extensions
 {
-    public static IServiceCollection AddKeycloakAuthentication(this IServiceCollection services,
-        IConfiguration configuration, IHostEnvironment environment)
+    public static TBuilder AddKeycloak<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+
     {
-        services.AddAuthentication().AddKeycloakJwtBearer(serviceName: "keycloak", realm: "eshop", options =>
+        builder.Services.AddAuthentication().AddKeycloakJwtBearer(serviceName: "keycloak", realm: "eshop", options =>
         {
             options.Audience = "store.api";
 
-            // Disable HTTPS metadata validation in development
-            if (environment.IsDevelopment())
+            // Explicitly set the Authority for production
+            if (builder.Environment.IsProduction())
+            {
+                var url = builder.Configuration["KEYCLOAK_HTTPS"];
+                options.Authority = $"{url}/realms/eshop";
+            }
+
+            // For development only - disable HTTPS metadata validation
+            // In production, use explicit Authority configuration instead
+            if (builder.Environment.IsDevelopment())
             {
                 options.RequireHttpsMetadata = false;
             }
-            else
-            {
-                // Set the Authority
-                var connection = configuration.GetConnectionString("keycloak");
-                options.Authority = $"{connection}/realms/eshop";
-            }
         });
 
-        services.AddAuthorizationBuilder();
+        builder.Services.AddAuthorizationBuilder();
 
-        return services;
+        return builder;
     }
 }

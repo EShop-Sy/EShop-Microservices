@@ -4,14 +4,12 @@ using System.Diagnostics;
 
 namespace BuildingBlocks.Behaviors;
 
-public class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavior<TRequest, TResponse>> logger)
-    : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse> where TResponse : notnull
+public class LoggingBehavior<TReq, TRes>(ILogger<LoggingBehavior<TReq, TRes>> logger)
+    : IPipelineBehavior<TReq, TRes> where TReq : IRequest<TRes> where TRes : notnull
 {
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
-        CancellationToken cancellationToken)
+    public async Task<TRes> Handle(TReq request, RequestHandlerDelegate<TRes> next, CancellationToken cancellationToken)
     {
-        logger.LogInformation("[START] Handle request={Request} - Response={Response} - RequestData={RequestData}",
-            typeof(TRequest).Name, typeof(TResponse).Name, request);
+        Log(LogLevel.Information, $"[START] Handle Req={typeof(TReq).Name} - Resp={typeof(TRes).Name} - Req={request}");
 
         var timer = new Stopwatch();
 
@@ -26,12 +24,29 @@ public class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavior<TReque
         // if the request is greater than 3 seconds, then log the warnings
         if (elapsed.Seconds > 3)
         {
-            logger.LogWarning("[PERFORMANCE] The request {Request} took {TimeTaken} seconds.", typeof(TRequest).Name,
-                elapsed.Seconds);
+            Log(LogLevel.Warning, $"[PERFORMANCE] The request {typeof(TReq).Name} took {elapsed.Seconds} seconds.");
         }
 
-        logger.LogInformation("[END] Handled {Request} with {Response}", typeof(TRequest).Name, typeof(TResponse).Name);
+        Log(LogLevel.Information, $"[END] Handled {typeof(TReq).Name} with {typeof(TRes).Name}");
 
         return response;
+    }
+
+    private void Log(LogLevel level, string message)
+    {
+        switch (level)
+        {
+            case LogLevel.Information:
+                if (logger.IsEnabled(LogLevel.Information)) logger.LogInformation("{Message}", message);
+                break;
+            case LogLevel.Trace:
+            case LogLevel.Debug:
+            case LogLevel.Warning:
+            case LogLevel.Error:
+            case LogLevel.Critical:
+            case LogLevel.None:
+            default:
+                throw new ArgumentOutOfRangeException(nameof(level), level, null);
+        }
     }
 }

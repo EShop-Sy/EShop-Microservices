@@ -1,0 +1,7 @@
+operations:
+- type: FileShareUpload
+  description: Upload files for keycloak
+  config:
+    storageAccount: ${AZURE_VOLUMES_STORAGE_ACCOUNT}
+    fileShareName: ${SERVICE_KEYCLOAK_FILE_SHARE_BM0_NAME}
+    path: /home/tech4life/Desktop/EShop-Sy/EShop-Microservices/src/Aspire/AppHost/realms

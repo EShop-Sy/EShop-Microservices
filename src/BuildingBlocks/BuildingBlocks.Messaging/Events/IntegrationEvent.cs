@@ -2,9 +2,9 @@
 
 public record IntegrationEvent
 {
-    public static Guid Id => Guid.NewGuid();
-
-    public static DateTime OccurredOn => DateTime.Now;
+    public Guid EventId { get; init; } = Guid.NewGuid();
 
     public string EventType => GetType().AssemblyQualifiedName!;
+
+    public DateTime Timestamp { get; init; } = DateTime.Now;
 }

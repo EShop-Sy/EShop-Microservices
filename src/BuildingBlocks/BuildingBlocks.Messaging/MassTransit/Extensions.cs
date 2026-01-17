@@ -1,31 +1,30 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Microsoft.Extensions.Hosting;
 
 namespace BuildingBlocks.Messaging.MassTransit;
 
 public static class Extensions
 {
-    public static IServiceCollection AddMessageBroker(this IServiceCollection services, IConfiguration configuration,
-        Assembly? assembly = null)
+    public static IHostApplicationBuilder AddBroker(this IHostApplicationBuilder builder, Assembly? assembly = null)
     {
-        services.AddMassTransit(config =>
+        builder.Services.AddMassTransit(config =>
         {
             config.SetKebabCaseEndpointNameFormatter();
 
             if (assembly != null) config.AddConsumers(assembly);
 
-            config.UsingRabbitMq((context, configurator) =>
+            config.UsingRabbitMq((context, cfg) =>
             {
-                var connectionString = configuration.GetConnectionString("messaging");
+                var connectionString = builder.Configuration.GetConnectionString("messaging");
 
-                configurator.Host(connectionString);
+                cfg.Host(connectionString);
 
-                configurator.ConfigureEndpoints(context);
+                cfg.ConfigureEndpoints(context);
             });
         });
 
-        return services;
+        return builder;
     }
 }

@@ -1,37 +1,14 @@
 <Solution>
-  <Folder Name="/Aspire/">
-    <Project Path="src/Aspire/AppHost/AppHost.csproj" />
-    <Project Path="src/Aspire/ServiceDefaults/ServiceDefaults.csproj" />
-  </Folder>
-  <Folder Name="/BuildingBlocks/">
-    <Project Path="src\BuildingBlocks\BuildingBlocks.Messaging\BuildingBlocks.Messaging.csproj" Type="C#" />
-    <Project Path="src\BuildingBlocks\BuildingBlocks\BuildingBlocks.csproj" Type="C#" />
-  </Folder>
-  <Folder Name="/Migrations/" />
-  <Folder Name="/Migrations/Basket/">
-    <Project Path="src/Migrations/Basket.API.MigrationService/Basket.API.MigrationService.csproj" />
-  </Folder>
-  <Folder Name="/Migrations/Catalog/">
-    <Project Path="src/Migrations/Catalog.API.MigrationService/Catalog.API.MigrationService.csproj" />
-  </Folder>
-  <Folder Name="/Migrations/Ordering/">
-    <Project Path="src/Migrations/Ordering.API.MigrationService/Ordering.API.MigrationService.csproj" />
-  </Folder>
-  <Folder Name="/Services/" />
-  <Folder Name="/Services/Basket/">
-    <Project Path="src\Services\Basket\Basket.API\Basket.API.csproj" Type="C#" />
-  </Folder>
-  <Folder Name="/Services/Catalog/">
-    <Project Path="src/Services/Catalog/Catalog.Application/Catalog.Application.csproj" />
-    <Project Path="src/Services/Catalog/Catalog.Domain/Catalog.Domain.csproj" />
-    <Project Path="src/Services/Catalog/Catalog.Infrastructure/Catalog.Infrastructure.csproj" />
-    <Project Path="src\Services\Catalog\Catalog.API\Catalog.API.csproj" Type="C#" />
-  </Folder>
-  <Folder Name="/Services/Ordering/">
-    <Project Path="src\Services\Ordering\Ordering.API\Ordering.API.csproj" Type="C#" />
-    <Project Path="src\Services\Ordering\Ordering.Application\Ordering.Application.csproj" Type="C#" />
-    <Project Path="src\Services\Ordering\Ordering.Domain\Ordering.Domain.csproj" Type="C#" />
-    <Project Path="src\Services\Ordering\Ordering.Infrastructure\Ordering.Infrastructure.csproj" Type="C#" />
-  </Folder>
-  <Folder Name="/Tests/" />
+    <Folder Name="/Aspire/">
+        <Project Path="src/Aspire/AppHost/AppHost.csproj"/>
+        <Project Path="src/Aspire/ServiceDefaults/ServiceDefaults.csproj"/>
+    </Folder>
+    <Folder Name="/BuildingBlocks/">
+        <Project Path="src\BuildingBlocks\BuildingBlocks.Messaging\BuildingBlocks.Messaging.csproj"/>
+        <Project Path="src\BuildingBlocks\BuildingBlocks\BuildingBlocks.csproj"/>
+    </Folder>
+    <Folder Name="/Services/"/>
+    <Folder Name="/Services/Basket/">
+        <Project Path="src\Services\Basket\Basket.API\Basket.API.csproj"/>
+    </Folder>
 </Solution>
