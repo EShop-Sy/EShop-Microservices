@@ -31,7 +31,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: | 
+          dotnet-version: |
             8.x
             9.x
             10.x
@@ -60,4 +60,4 @@ jobs:
           AZURE_KEYCLOAK_CLIENT_SECRET: ${{ secrets.AZURE_KEYCLOAK_CLIENT_SECRET }}
           AZURE_RABBIT_MQPASSWORD: ${{ secrets.AZURE_RABBIT_MQPASSWORD }}
           AZURE_RABBIT_MQUSER_NAME: ${{ secrets.AZURE_RABBIT_MQUSER_NAME }}
-        
+
