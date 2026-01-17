@@ -59,6 +59,7 @@ module cache_roles 'cache-roles/cache-roles.module.bicep' = {
     cache_outputs_name: cache.outputs.name
     location: location
     principalId: resources.outputs.MANAGED_IDENTITY_PRINCIPAL_ID
+    principalName: resources.outputs.MANAGED_IDENTITY_NAME
   }
 }
 module postgres 'postgres/postgres.module.bicep' = {
@@ -93,6 +94,5 @@ output SERVICE_KEYCLOAK_VOLUME_BM0_NAME string = resources.outputs.SERVICE_KEYCL
 output SERVICE_KEYCLOAK_FILE_SHARE_BM0_NAME string = resources.outputs.SERVICE_KEYCLOAK_FILE_SHARE_BM0_NAME
 output AZURE_VOLUMES_STORAGE_ACCOUNT string = resources.outputs.AZURE_VOLUMES_STORAGE_ACCOUNT
 output CACHE_CONNECTIONSTRING string = cache.outputs.connectionString
-output CACHE_HOSTNAME string = cache.outputs.hostName
 output POSTGRES_CONNECTIONSTRING string = postgres.outputs.connectionString
 output POSTGRES_HOSTNAME string = postgres.outputs.hostName

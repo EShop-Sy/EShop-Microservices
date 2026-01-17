@@ -50,12 +50,6 @@ properties:
             value: "5432"
           - name: BASKETDB_URI
             value: postgresql://{{ .Env.POSTGRES_HOSTNAME }}/basketdb
-          - name: CACHE_HOST
-            value: '{{ .Env.CACHE_HOSTNAME }}'
-          - name: CACHE_PORT
-            value: "10000"
-          - name: CACHE_URI
-            value: rediss://{{ .Env.CACHE_HOSTNAME }}:10000
           - name: HTTP_PORTS
             value: '{{ targetPortOrDefault 0 }}'
           - name: KEYCLOAK_HTTP

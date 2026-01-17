@@ -4,9 +4,8 @@ var builder = DistributedApplication.CreateBuilder(args);
 
 // Backing Services (Redis, RabbitMQ, etc.)
 // Cache
-var cache = builder.AddAzureManagedRedis("cache")
+var cache = builder.AddAzureRedis("cache")
     .RunAsContainer(resourceBuilder => resourceBuilder.WithContainerName("eshop-cache"))
-    .WithClearCommand()
     .WithIconName("StackFilled");
 
 // Databases
