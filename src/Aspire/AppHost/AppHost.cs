@@ -46,6 +46,7 @@ builder.AddYarp("api-gateway-mobile")
         })
     .WaitForStart(keycloak)
     .WaitForStart(basket)
-    .WithIconName("ArrowSplit");
+    .WithIconName("ArrowSplit")
+    .WithExternalHttpEndpoints();
 
 await builder.Build().RunAsync();
