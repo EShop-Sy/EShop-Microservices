@@ -32,20 +32,20 @@ properties:
             value: {{ .Env.MANAGED_IDENTITY_CLIENT_ID }}
           - name: ASPNETCORE_ENVIRONMENT
             value: Development
-          - name: BASKET_HTTP
-            value: http://Basket.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
-          - name: BASKET_HTTPS
-            value: https://Basket.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: BASKET_SERVICE_HTTP
+            value: http://basket-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: BASKET_SERVICE_HTTPS
+            value: https://basket-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
           - name: KEYCLOAK_HTTP
             value: http://keycloak.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
           - name: KEYCLOAK_MANAGEMENT
             value: http://keycloak:9000
-          - name: REVERSEPROXY__CLUSTERS__cluster_Basket__DESTINATIONS__destination1__ADDRESS
-            value: https+http://Basket
+          - name: REVERSEPROXY__CLUSTERS__cluster_basket-service__DESTINATIONS__destination1__ADDRESS
+            value: https+http://basket-service
           - name: REVERSEPROXY__CLUSTERS__cluster_keycloak__DESTINATIONS__destination1__ADDRESS
             value: http://keycloak
           - name: REVERSEPROXY__ROUTES__route0__CLUSTERID
-            value: cluster_Basket
+            value: cluster_basket-service
           - name: REVERSEPROXY__ROUTES__route0__MATCH__PATH
             value: /basket/{**catch-all}
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__0__PathPattern
@@ -76,10 +76,10 @@ properties:
             value: X-Powered-By
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__2__When
             value: Success
-          - name: services__Basket__http__0
-            value: http://Basket.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
-          - name: services__Basket__https__0
-            value: https://Basket.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: services__basket-service__http__0
+            value: http://basket-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: services__basket-service__https__0
+            value: https://basket-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
           - name: services__keycloak__http__0
             value: http://keycloak.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
           - name: services__keycloak__management__0

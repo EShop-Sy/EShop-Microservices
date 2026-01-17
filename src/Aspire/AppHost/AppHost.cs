@@ -31,7 +31,7 @@ var keycloak = builder.AddKeycloak("keycloak")
     .WithIconName("KeyMultiple");
 
 // Projects
-var basket = builder.AddProject<Projects.Basket_API>("Basket")
+var basket = builder.AddProject<Projects.Basket_API>("basket-service")
     .WithReferences([keycloak])
     .WithReferences([databases.BasketDb, cache, rabbitmq])
     .WithHttpHealthCheck("/health")
