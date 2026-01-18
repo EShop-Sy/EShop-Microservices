@@ -16,7 +16,7 @@ public static class Extensions
 
         builder.AddDataServices();
 
-        builder.AddRedisCache();
+        // builder.AddRedisCache();
 
         builder.AddBroker();
 
@@ -86,7 +86,7 @@ public static class Extensions
     {
         builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
-        builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
+        // builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 
         return builder;
     }

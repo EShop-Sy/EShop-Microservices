@@ -23,8 +23,6 @@ properties:
     secrets:
       - name: connectionstrings--basketdb
         value: '{{ .Env.POSTGRES_CONNECTIONSTRING }};Database=basketdb'
-      - name: connectionstrings--cache
-        value: '{{ .Env.CACHE_CONNECTIONSTRING }}'
       - name: connectionstrings--messaging
         value: amqp://{{ uriEncode (securedParameter "RabbitMQUserName" )}}:{{ uriEncode (securedParameter "RabbitMQPassword" )}}@messaging:5672
       - name: messaging-password
@@ -74,8 +72,6 @@ properties:
             value: http://keycloak-service:9000
           - name: ConnectionStrings__basketdb
             secretRef: connectionstrings--basketdb
-          - name: ConnectionStrings__cache
-            secretRef: connectionstrings--cache
           - name: ConnectionStrings__messaging
             secretRef: connectionstrings--messaging
           - name: MESSAGING_PASSWORD

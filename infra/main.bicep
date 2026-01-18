@@ -45,23 +45,6 @@ module resources 'resources.bicep' = {
   }
 }
 
-module cache 'cache/cache.module.bicep' = {
-  name: 'cache'
-  scope: rg
-  params: {
-    location: location
-  }
-}
-module cache_roles 'cache-roles/cache-roles.module.bicep' = {
-  name: 'cache-roles'
-  scope: rg
-  params: {
-    cache_outputs_name: cache.outputs.name
-    location: location
-    principalId: resources.outputs.MANAGED_IDENTITY_PRINCIPAL_ID
-    principalName: resources.outputs.MANAGED_IDENTITY_NAME
-  }
-}
 module postgres 'postgres/postgres.module.bicep' = {
   name: 'postgres'
   scope: rg
@@ -93,6 +76,5 @@ output AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN string = resources.output
 output SERVICE_KEYCLOAK_SERVICE_VOLUME_BM0_NAME string = resources.outputs.SERVICE_KEYCLOAK_SERVICE_VOLUME_BM0_NAME
 output SERVICE_KEYCLOAK_SERVICE_FILE_SHARE_BM0_NAME string = resources.outputs.SERVICE_KEYCLOAK_SERVICE_FILE_SHARE_BM0_NAME
 output AZURE_VOLUMES_STORAGE_ACCOUNT string = resources.outputs.AZURE_VOLUMES_STORAGE_ACCOUNT
-output CACHE_CONNECTIONSTRING string = cache.outputs.connectionString
 output POSTGRES_CONNECTIONSTRING string = postgres.outputs.connectionString
 output POSTGRES_HOSTNAME string = postgres.outputs.hostName

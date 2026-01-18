@@ -4,9 +4,9 @@ var builder = DistributedApplication.CreateBuilder(args);
 
 // Backing Services (Redis, RabbitMQ, etc.)
 // Cache
-var cache = builder.AddAzureRedis("cache")
-    .RunAsContainer(resourceBuilder => resourceBuilder.WithContainerName("eshop-cache"))
-    .WithIconName("StackFilled");
+// var cache = builder.AddAzureRedis("cache")
+//     .RunAsContainer(resourceBuilder => resourceBuilder.WithContainerName("eshop-cache"))
+//     .WithIconName("StackFilled");
 
 // Databases
 var databases = builder.AddAzurePostgresFlexibleServer("postgres")
@@ -49,7 +49,8 @@ var keycloak = builder.AddKeycloak("keycloak-service")
 // Projects
 var basket = builder.AddProject<Projects.Basket_API>("basket-service")
     .WithReferences([keycloak])
-    .WithReferences([databases.BasketDb, cache, rabbitmq])
+    .WithReferences([databases.BasketDb, rabbitmq])
+    // .WithReferences([databases.BasketDb, cache, rabbitmq])
     .WithHttpHealthCheck("/health")
     .WithIconName("Cart");
 
