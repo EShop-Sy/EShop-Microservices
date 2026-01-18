@@ -31,7 +31,7 @@ var keycloak = builder.AddKeycloak("keycloak-auth-service")
     .WithArgs("--http-enabled=true")
     .WithArgs("--hostname=localhost")
     .WithOtlpExporter()
-    .WithHttpsEndpoint()
+    // .WithHttpsEndpoint()
     .WithIconName("KeyMultiple");
 
 // #pragma warning disable ASPIRECERTIFICATES001
