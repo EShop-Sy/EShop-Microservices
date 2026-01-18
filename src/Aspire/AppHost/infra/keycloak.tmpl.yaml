@@ -39,7 +39,7 @@ properties:
         args:
           - start
           - --import-realm
-          - http-enabled
+          - KC_HTTP_ENABLED
           - "True"
         env:
           - name: AZURE_CLIENT_ID
