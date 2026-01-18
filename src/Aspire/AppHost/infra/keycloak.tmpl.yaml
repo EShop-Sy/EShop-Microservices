@@ -40,6 +40,7 @@ properties:
           - start
           - --import-realm
           - --http-enabled=true
+          - --hostname=localhost
         env:
           - name: AZURE_CLIENT_ID
             value: {{ .Env.MANAGED_IDENTITY_CLIENT_ID }}
