@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using AppHost.Extensions;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -27,6 +28,8 @@ var secret = builder.AddParameter("KeycloakClientSecret", secret: true);
 var keycloak = builder.AddKeycloak("keycloak")
     .WithRealmImport("./realms")
     .WithEnvironment("CLIENT_SECRET", secret)
+    .WithEnabledFeatures()
+    .WithHttpEndpoint(name: "keycloak")
     .WithArgs("--http-enabled=true")
     .WithArgs("--hostname=localhost")
     .WithOtlpExporter()
