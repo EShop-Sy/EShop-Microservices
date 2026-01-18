@@ -27,7 +27,7 @@ var secret = builder.AddParameter("KeycloakClientSecret", secret: true);
 var keycloak = builder.AddKeycloak("keycloak")
     .WithRealmImport("./realms")
     .WithEnvironment("CLIENT_SECRET", secret)
-    .WithArgs("KC_HTTP_ENABLED", true)
+    .WithArgs("--http-enabled=true")
     .WithOtlpExporter()
     .WithIconName("KeyMultiple");
 
