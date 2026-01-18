@@ -16,7 +16,7 @@ public static class Extensions
             // Explicitly set the Authority for production
             if (builder.Environment.IsProduction())
             {
-                var url = builder.Configuration["KEYCLOAK_HTTPS"];
+                var url = builder.Configuration["KEYCLOAK_AUTH_SERVICE_HTTPS"];
                 options.Authority = $"{url}/realms/eshop";
             }
 

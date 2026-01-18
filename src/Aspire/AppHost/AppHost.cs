@@ -25,16 +25,24 @@ var rabbitmq = builder
 // Authentication
 var secret = builder.AddParameter("KeycloakClientSecret", secret: true);
 
-#pragma warning disable ASPIRECERTIFICATES001
-var keycloak = builder.AddKeycloak("keycloak")
+var keycloak = builder.AddKeycloak("keycloak-auth-service")
     .WithRealmImport("./realms")
     .WithEnvironment("CLIENT_SECRET", secret)
-    .WithEnabledFeatures()
-    .WithHttpsDeveloperCertificate()
-    .WithDeveloperCertificateTrust(true)
+    .WithArgs("--http-enabled=true")
+    .WithArgs("--hostname=localhost")
     .WithOtlpExporter()
     .WithIconName("KeyMultiple");
-#pragma warning restore ASPIRECERTIFICATES001
+
+// #pragma warning disable ASPIRECERTIFICATES001
+// var keycloak = builder.AddKeycloak("keycloak")
+//     .WithRealmImport("./realms")
+//     .WithEnvironment("CLIENT_SECRET", secret)
+//     .WithEnabledFeatures()
+//     .WithHttpsDeveloperCertificate()
+//     .WithDeveloperCertificateTrust(true)
+//     .WithOtlpExporter()
+//     .WithIconName("KeyMultiple");
+// #pragma warning restore ASPIRECERTIFICATES001
 
 // Projects
 var basket = builder.AddProject<Projects.Basket_API>("basket-service")

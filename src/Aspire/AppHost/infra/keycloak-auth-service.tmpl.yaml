@@ -27,18 +27,20 @@ properties:
       - name: client-secret
         value: '{{ securedParameter "KeycloakClientSecret" }}'
       - name: kc-bootstrap-admin-password
-        value: '{{ securedParameter "keycloak_password" }}'
+        value: '{{ securedParameter "keycloak_auth_service_password" }}'
   template:
     volumes:
-      - name: keycloak-bm0
+      - name: keycloak-auth-service-bm0
         storageType: AzureFile
-        storageName: {{ .Env.SERVICE_KEYCLOAK_VOLUME_BM0_NAME }} 
+        storageName: {{ .Env.SERVICE_KEYCLOAK_AUTH_SERVICE_VOLUME_BM0_NAME }} 
     containers:
       - image: {{ .Image }}
-        name: keycloak
+        name: keycloak-auth-service
         args:
           - start
           - --import-realm
+          - --http-enabled=true
+          - --hostname=localhost
         env:
           - name: AZURE_CLIENT_ID
             value: {{ .Env.MANAGED_IDENTITY_CLIENT_ID }}
@@ -53,10 +55,10 @@ properties:
           - name: KC_BOOTSTRAP_ADMIN_PASSWORD
             secretRef: kc-bootstrap-admin-password
         volumeMounts:
-          - volumeName: keycloak-bm0
+          - volumeName: keycloak-auth-service-bm0
             mountPath: /opt/keycloak/data/import
     scale:
       minReplicas: 1
 tags:
-  azd-service-name: keycloak
-  aspire-resource-name: keycloak
+  azd-service-name: keycloak-auth-service
+  aspire-resource-name: keycloak-auth-service

@@ -24,7 +24,7 @@ param RabbitMQUserName string
   }
 })
 @secure()
-param keycloak_password string
+param keycloak_auth_service_password string
 
 var tags = {
   'azd-env-name': environmentName
@@ -90,8 +90,8 @@ output AZURE_CONTAINER_REGISTRY_NAME string = resources.outputs.AZURE_CONTAINER_
 output AZURE_CONTAINER_APPS_ENVIRONMENT_NAME string = resources.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_NAME
 output AZURE_CONTAINER_APPS_ENVIRONMENT_ID string = resources.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_ID
 output AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN string = resources.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
-output SERVICE_KEYCLOAK_VOLUME_BM0_NAME string = resources.outputs.SERVICE_KEYCLOAK_VOLUME_BM0_NAME
-output SERVICE_KEYCLOAK_FILE_SHARE_BM0_NAME string = resources.outputs.SERVICE_KEYCLOAK_FILE_SHARE_BM0_NAME
+output SERVICE_KEYCLOAK_AUTH_SERVICE_VOLUME_BM0_NAME string = resources.outputs.SERVICE_KEYCLOAK_AUTH_SERVICE_VOLUME_BM0_NAME
+output SERVICE_KEYCLOAK_AUTH_SERVICE_FILE_SHARE_BM0_NAME string = resources.outputs.SERVICE_KEYCLOAK_AUTH_SERVICE_FILE_SHARE_BM0_NAME
 output AZURE_VOLUMES_STORAGE_ACCOUNT string = resources.outputs.AZURE_VOLUMES_STORAGE_ACCOUNT
 output CACHE_CONNECTIONSTRING string = cache.outputs.connectionString
 output POSTGRES_CONNECTIONSTRING string = postgres.outputs.connectionString

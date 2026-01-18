@@ -70,9 +70,9 @@ resource volumesAccountRoleAssignment 'Microsoft.Authorization/roleAssignments@2
   }
 }
 
-resource keycloakBm0FileShare 'Microsoft.Storage/storageAccounts/fileServices/shares@2022-05-01' = {
+resource keycloakAuthServiceBm0FileShare 'Microsoft.Storage/storageAccounts/fileServices/shares@2022-05-01' = {
   parent: storageVolumeFileService
-  name: take('${toLower('keycloak')}-${toLower('bm0')}', 60)
+  name: take('${toLower('keycloak-auth-service')}-${toLower('bm0')}', 60)
   properties: {
     shareQuota: 1024
     enabledProtocols: 'SMB'
@@ -106,12 +106,12 @@ resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2024-02-02-p
 
 }
 
-resource keycloakBm0Store 'Microsoft.App/managedEnvironments/storages@2023-05-01' = {
+resource keycloakAuthServiceBm0Store 'Microsoft.App/managedEnvironments/storages@2023-05-01' = {
   parent: containerAppEnvironment
-  name: take('${toLower('keycloak')}-${toLower('bm0')}', 32)
+  name: take('${toLower('keycloak-auth-service')}-${toLower('bm0')}', 32)
   properties: {
     azureFile: {
-      shareName: keycloakBm0FileShare.name
+      shareName: keycloakAuthServiceBm0FileShare.name
       accountName: storageVolume.name
       accountKey: storageVolume.listKeys().keys[0].value
       accessMode: 'ReadOnly'
@@ -130,6 +130,6 @@ output AZURE_CONTAINER_REGISTRY_NAME string = containerRegistry.name
 output AZURE_CONTAINER_APPS_ENVIRONMENT_NAME string = containerAppEnvironment.name
 output AZURE_CONTAINER_APPS_ENVIRONMENT_ID string = containerAppEnvironment.id
 output AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN string = containerAppEnvironment.properties.defaultDomain
-output SERVICE_KEYCLOAK_VOLUME_BM0_NAME string = keycloakBm0Store.name
-output SERVICE_KEYCLOAK_FILE_SHARE_BM0_NAME string = keycloakBm0FileShare.name
+output SERVICE_KEYCLOAK_AUTH_SERVICE_VOLUME_BM0_NAME string = keycloakAuthServiceBm0Store.name
+output SERVICE_KEYCLOAK_AUTH_SERVICE_FILE_SHARE_BM0_NAME string = keycloakAuthServiceBm0FileShare.name
 output AZURE_VOLUMES_STORAGE_ACCOUNT string = storageVolume.name
