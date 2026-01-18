@@ -36,14 +36,14 @@ properties:
             value: http://basket-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
           - name: BASKET_SERVICE_HTTPS
             value: https://basket-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
-          - name: KEYCLOAK_AUTH_SERVICE_HTTPS
-            value: https://keycloak-auth-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
-          - name: KEYCLOAK_AUTH_SERVICE_MANAGEMENT
-            value: http://keycloak-auth-service:9000
+          - name: KEYCLOAK_SERVICE_HTTP
+            value: http://keycloak-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: KEYCLOAK_SERVICE_MANAGEMENT
+            value: http://keycloak-service:9000
           - name: REVERSEPROXY__CLUSTERS__cluster_basket-service__DESTINATIONS__destination1__ADDRESS
             value: https+http://basket-service
-          - name: REVERSEPROXY__CLUSTERS__cluster_keycloak-auth-service__DESTINATIONS__destination1__ADDRESS
-            value: https+http://keycloak-auth-service
+          - name: REVERSEPROXY__CLUSTERS__cluster_keycloak-service__DESTINATIONS__destination1__ADDRESS
+            value: http://keycloak-service
           - name: REVERSEPROXY__ROUTES__route0__CLUSTERID
             value: cluster_basket-service
           - name: REVERSEPROXY__ROUTES__route0__MATCH__PATH
@@ -61,7 +61,7 @@ properties:
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__2__When
             value: Success
           - name: REVERSEPROXY__ROUTES__route1__CLUSTERID
-            value: cluster_keycloak-auth-service
+            value: cluster_keycloak-service
           - name: REVERSEPROXY__ROUTES__route1__MATCH__PATH
             value: /keycloak/{**catch-all}
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__0__PathPattern
@@ -80,10 +80,10 @@ properties:
             value: http://basket-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
           - name: services__basket-service__https__0
             value: https://basket-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
-          - name: services__keycloak-auth-service__https__0
-            value: https://keycloak-auth-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
-          - name: services__keycloak-auth-service__management__0
-            value: http://keycloak-auth-service:9000
+          - name: services__keycloak-service__http__0
+            value: http://keycloak-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: services__keycloak-service__management__0
+            value: http://keycloak-service:9000
     scale:
       minReplicas: 1
 tags:

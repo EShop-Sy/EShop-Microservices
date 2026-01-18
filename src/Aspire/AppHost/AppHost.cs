@@ -24,15 +24,16 @@ var rabbitmq = builder
 
 // Authentication
 var secret = builder.AddParameter("KeycloakClientSecret", secret: true);
-
-var keycloak = builder.AddKeycloak("keycloak-auth-service")
+var keycloak = builder.AddKeycloak("keycloak-service")
     .WithRealmImport("./realms")
     .WithEnvironment("CLIENT_SECRET", secret)
-    .WithArgs("--http-enabled=true")
-    .WithArgs("--hostname=localhost")
     .WithOtlpExporter()
-    // .WithHttpsEndpoint()
     .WithIconName("KeyMultiple");
+
+// .WithArgs("--http-enabled=true")
+// .WithArgs("--hostname=localhost")
+// .WithHttpsEndpoint()
+// .WithHttpsEndpoint()
 
 // #pragma warning disable ASPIRECERTIFICATES001
 // var keycloak = builder.AddKeycloak("keycloak")

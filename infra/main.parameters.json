@@ -14,8 +14,8 @@
       "RabbitMQUserName": {
         "value": "${AZURE_RABBIT_MQUSER_NAME}"
       },
-      "keycloak_auth_service_password": {
-        "value": "${AZURE_KEYCLOAK_AUTH_SERVICE_PASSWORD}"
+      "keycloak_service_password": {
+        "value": "${AZURE_KEYCLOAK_SERVICE_PASSWORD}"
       },
       "environmentName": {
         "value": "${AZURE_ENV_NAME}"

@@ -4,7 +4,8 @@ namespace AppHost.Extensions;
 
 internal static class YarpResourceBuilderExtensions
 {
-    public static IResourceBuilder<YarpResource> WithSettings(this IResourceBuilder<YarpResource> builder, IDictionary<string, IResourceBuilder<IResourceWithServiceDiscovery>> clusters)
+    public static IResourceBuilder<YarpResource> WithSettings(this IResourceBuilder<YarpResource> builder,
+        IDictionary<string, IResourceBuilder<IResourceWithServiceDiscovery>> clusters)
     {
         builder.WithConfiguration(yarp =>
         {
