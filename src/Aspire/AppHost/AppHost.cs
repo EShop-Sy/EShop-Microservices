@@ -1,4 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
 using AppHost.Extensions;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -25,16 +24,17 @@ var rabbitmq = builder
 
 // Authentication
 var secret = builder.AddParameter("KeycloakClientSecret", secret: true);
+
+#pragma warning disable ASPIRECERTIFICATES001
 var keycloak = builder.AddKeycloak("keycloak")
     .WithRealmImport("./realms")
     .WithEnvironment("CLIENT_SECRET", secret)
     .WithEnabledFeatures()
-    // .WithHttpEndpoint(name: "keycloak")
-    .WithArgs("--http-enabled=true")
-    .WithArgs("--hostname=localhost")
-    .WithEndpointProxySupport(true)
+    .WithHttpsDeveloperCertificate()
+    .WithDeveloperCertificateTrust(true)
     .WithOtlpExporter()
     .WithIconName("KeyMultiple");
+#pragma warning restore ASPIRECERTIFICATES001
 
 // Projects
 var basket = builder.AddProject<Projects.Basket_API>("basket-service")
