@@ -29,9 +29,10 @@ var keycloak = builder.AddKeycloak("keycloak")
     .WithRealmImport("./realms")
     .WithEnvironment("CLIENT_SECRET", secret)
     .WithEnabledFeatures()
-    .WithHttpEndpoint(name: "keycloak")
+    // .WithHttpEndpoint(name: "keycloak")
     .WithArgs("--http-enabled=true")
     .WithArgs("--hostname=localhost")
+    .WithEndpointProxySupport(true)
     .WithOtlpExporter()
     .WithIconName("KeyMultiple");
 
