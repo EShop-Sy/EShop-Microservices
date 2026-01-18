@@ -1,8 +1,7 @@
 operations:
-  - type: FileShareUpload
-    description: Upload files for keycloak-auth-service
-    config:
-      storageAccount: ${AZURE_VOLUMES_STORAGE_ACCOUNT}
-      fileShareName: ${SERVICE_KEYCLOAK_AUTH_SERVICE_FILE_SHARE_BM0_NAME}
-      path: ./src/Aspire/AppHost/realms
-      
+- type: FileShareUpload
+  description: Upload files for keycloak-auth-service
+  config:
+    storageAccount: ${AZURE_VOLUMES_STORAGE_ACCOUNT}
+    fileShareName: ${SERVICE_KEYCLOAK_AUTH_SERVICE_FILE_SHARE_BM0_NAME}
+    path: ./src/Aspire/AppHost/realms

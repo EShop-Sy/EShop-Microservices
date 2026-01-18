@@ -54,6 +54,8 @@ properties:
             value: '{{ targetPortOrDefault 0 }}'
           - name: KEYCLOAK_AUTH_SERVICE_HTTP
             value: http://keycloak-auth-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: KEYCLOAK_AUTH_SERVICE_HTTPS
+            value: https://keycloak-auth-service:8000
           - name: KEYCLOAK_AUTH_SERVICE_MANAGEMENT
             value: http://keycloak-auth-service:9000
           - name: MESSAGING_HOST
@@ -70,6 +72,8 @@ properties:
             value: in_memory
           - name: services__keycloak-auth-service__http__0
             value: http://keycloak-auth-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: services__keycloak-auth-service__https__0
+            value: https://keycloak-auth-service:8000
           - name: services__keycloak-auth-service__management__0
             value: http://keycloak-auth-service:9000
           - name: ConnectionStrings__basketdb

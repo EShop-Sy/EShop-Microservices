@@ -16,6 +16,8 @@ properties:
       additionalPortMappings:
         - targetPort: 9000
           external: false
+        - targetPort: 8000
+          external: false
       external: false
       targetPort: 8080
       transport: http
