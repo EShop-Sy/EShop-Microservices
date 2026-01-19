@@ -16,24 +16,26 @@ internal static class YarpResourceBuilderExtensions
 
                 yarp.AddRoute($"/{name}/{{**catch-all}}", cluster)
                     .WithTransformPathRouteValues("/{**catch-all}")
+                    .WithTransformForwarded(useHost: true, useProto: true, forFormat: NodeFormat.IpAndPort,
+                        byFormat: NodeFormat.Random, action: ForwardedTransformActions.Append)
                     // .WithTransformForwarded()
                     // .WithTransformForwarded(useHost: true, useProto: true, forFormat: NodeFormat.IpAndPort, byFormat: NodeFormat.Random, action: ForwardedTransformActions.Append)
                     // .WithTransformRequestHeader("X-Forwarded-Host", "gateway.eshop.sy.com")
                     // .WithTransformRequestHeader("RequestHeader", "X-Forwarded-Proto")
                     // .WithTransformRequestHeader("Set", "https")
-                    .WithTransformXForwarded(
-                        //     // headerPrefix: ForwardedTransformActions.Remove,
-                        // xDefault: ForwardedTransformActions.Set,
-                        // xHost:
-                        xFor: ForwardedTransformActions.Append,
-                        xHost: ForwardedTransformActions.Append,
-                        xProto: ForwardedTransformActions.Append
-                        //     xPrefix: ForwardedTransformActions.Remove
-                        //     // ForwardedTransformActions? xFor = null,
-                        //     // ForwardedTransformActions? xHost = null,
-                        //     // ForwardedTransformActions? xProto = null,
-                        //     // ForwardedTransformActions? xPrefix = null
-                    )
+                    // .WithTransformXForwarded(
+                    //     //     // headerPrefix: ForwardedTransformActions.Remove,
+                    //     // xDefault: ForwardedTransformActions.Set,
+                    //     // xHost:
+                    //     xFor: ForwardedTransformActions.Append,
+                    //     xHost: ForwardedTransformActions.Append,
+                    //     xProto: ForwardedTransformActions.Append
+                    //     //     xPrefix: ForwardedTransformActions.Remove
+                    //     //     // ForwardedTransformActions? xFor = null,
+                    //     //     // ForwardedTransformActions? xHost = null,
+                    //     //     // ForwardedTransformActions? xProto = null,
+                    //     //     // ForwardedTransformActions? xPrefix = null
+                    // )
                     .WithTransformResponseHeader("X-Powered-By", "YARP");
             }
         });

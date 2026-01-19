@@ -50,16 +50,14 @@ properties:
             value: /basket/{**catch-all}
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__0__PathPattern
             value: /{**catch-all}
-          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__For
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__Action
             value: Append
-          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__HeaderPrefix
-            value: X-Forwarded-
-          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__Host
-            value: Append
-          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__Proto
-            value: Append
-          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__X-Forwarded
-            value: Set
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__ByFormat
+            value: Random
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__ForFormat
+            value: IpAndPort
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__Forwarded
+            value: For,By,Host,Proto
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__2__Append
             value: YARP
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__2__ResponseHeader
@@ -72,16 +70,14 @@ properties:
             value: /keycloak/{**catch-all}
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__0__PathPattern
             value: /{**catch-all}
-          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__For
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__Action
             value: Append
-          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__HeaderPrefix
-            value: X-Forwarded-
-          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__Host
-            value: Append
-          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__Proto
-            value: Append
-          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__X-Forwarded
-            value: Set
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__ByFormat
+            value: Random
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__ForFormat
+            value: IpAndPort
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__Forwarded
+            value: For,By,Host,Proto
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__2__Append
             value: YARP
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__2__ResponseHeader
