@@ -42,6 +42,7 @@ properties:
           - --http-enabled=true
           - --proxy-headers=forwarded
           - --hostname-strict=false
+          - --hostname-backchannel-dynamic=true
         env:
           - name: AZURE_CLIENT_ID
             value: {{ .Env.MANAGED_IDENTITY_CLIENT_ID }}

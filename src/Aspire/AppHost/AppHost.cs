@@ -29,6 +29,7 @@ var keycloak = builder.AddKeycloak("keycloak-service")
     .WithArgs("--http-enabled=true")
     .WithArgs("--proxy-headers=forwarded")
     .WithArgs("--hostname-strict=false")
+    .WithArgs("--hostname-backchannel-dynamic=true")
     .WithEnvironment("CLIENT_SECRET", secret)
     // .withend
     // .WithHttpEndpoint(port: 8080, name: "http-endpoint")
