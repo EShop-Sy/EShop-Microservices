@@ -38,6 +38,8 @@ properties:
             value: https://basket-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
           - name: KEYCLOAK_SERVICE_HTTP
             value: http://keycloak-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: KEYCLOAK_SERVICE_HTTP_ENDPOINT
+            value: http://keycloak-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
           - name: KEYCLOAK_SERVICE_MANAGEMENT
             value: http://keycloak-service:9000
           - name: REVERSEPROXY__CLUSTERS__cluster_basket-service__DESTINATIONS__destination1__ADDRESS
@@ -88,6 +90,8 @@ properties:
             value: http://basket-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
           - name: services__basket-service__https__0
             value: https://basket-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: services__keycloak-service__http-endpoint__0
+            value: http://keycloak-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
           - name: services__keycloak-service__http__0
             value: http://keycloak-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
           - name: services__keycloak-service__management__0
