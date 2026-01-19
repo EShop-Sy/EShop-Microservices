@@ -50,19 +50,15 @@ properties:
             value: /basket/{**catch-all}
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__0__PathPattern
             value: /{**catch-all}
-          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__Append
-            value: X-Forwarded-Proto
-          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__RequestHeader
-            value: RequestHeader
-          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__2__Append
-            value: https
-          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__2__RequestHeader
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__HeaderPrefix
+            value: X-Forwarded-
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__X-Forwarded
             value: Set
-          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__3__Append
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__2__Append
             value: YARP
-          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__3__ResponseHeader
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__2__ResponseHeader
             value: X-Powered-By
-          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__3__When
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__2__When
             value: Success
           - name: REVERSEPROXY__ROUTES__route1__CLUSTERID
             value: cluster_keycloak-service
@@ -70,19 +66,15 @@ properties:
             value: /keycloak/{**catch-all}
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__0__PathPattern
             value: /{**catch-all}
-          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__Append
-            value: X-Forwarded-Proto
-          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__RequestHeader
-            value: RequestHeader
-          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__2__Append
-            value: https
-          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__2__RequestHeader
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__HeaderPrefix
+            value: X-Forwarded-
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__X-Forwarded
             value: Set
-          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__3__Append
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__2__Append
             value: YARP
-          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__3__ResponseHeader
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__2__ResponseHeader
             value: X-Powered-By
-          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__3__When
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__2__When
             value: Success
           - name: services__basket-service__http__0
             value: http://basket-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}

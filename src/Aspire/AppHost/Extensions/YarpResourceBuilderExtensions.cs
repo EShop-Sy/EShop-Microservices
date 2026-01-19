@@ -18,8 +18,20 @@ internal static class YarpResourceBuilderExtensions
                     .WithTransformPathRouteValues("/{**catch-all}")
                     // .WithTransformForwarded(useHost: true, useProto: true, forFormat: NodeFormat.IpAndPort, byFormat: NodeFormat.Random, action: ForwardedTransformActions.Append)
                     // .WithTransformRequestHeader("X-Forwarded-Host", "gateway.eshop.sy.com")
-                    .WithTransformRequestHeader("RequestHeader", "X-Forwarded-Proto")
-                    .WithTransformRequestHeader("Set", "https")
+                    // .WithTransformRequestHeader("RequestHeader", "X-Forwarded-Proto")
+                    // .WithTransformRequestHeader("Set", "https")
+                    .WithTransformXForwarded(
+                        headerPrefix: "X-Forwarded-",
+                        xDefault: ForwardedTransformActions.Set,
+                        xFor: null,
+                        xHost: null,
+                        xProto: null,
+                        xPrefix: null
+                        // ForwardedTransformActions? xFor = null,
+                        // ForwardedTransformActions? xHost = null,
+                        // ForwardedTransformActions? xProto = null,
+                        // ForwardedTransformActions? xPrefix = null
+                    )
                     .WithTransformResponseHeader("X-Powered-By", "YARP");
             }
         });
