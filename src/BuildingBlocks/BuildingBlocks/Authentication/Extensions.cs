@@ -16,7 +16,9 @@ public static class Extensions
                 if (!builder.Environment.IsDevelopment())
                 {
                     var keycloakHost = builder.Configuration["KEYCLOAK_SERVICE_HTTP"]!.Replace("http://", "https://");
+
                     options.Authority = $"{keycloakHost}/realms/eshop";
+
                     options.MetadataAddress = $"{keycloakHost}/realms/eshop/.well-known/openid-configuration";
                 }
 
