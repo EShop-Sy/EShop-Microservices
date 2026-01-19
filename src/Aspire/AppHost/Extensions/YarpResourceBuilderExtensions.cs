@@ -22,17 +22,17 @@ internal static class YarpResourceBuilderExtensions
                     // .WithTransformRequestHeader("RequestHeader", "X-Forwarded-Proto")
                     // .WithTransformRequestHeader("Set", "https")
                     .WithTransformXForwarded(
-                    //     // headerPrefix: ForwardedTransformActions.Remove,
-                    // xDefault: ForwardedTransformActions.Set,
-                    // xHost:
-                    //     xFor: ForwardedTransformActions.Append,
-                    // xHost: ForwardedTransformActions.Append
-                    // xProto: ForwardedTransformActions.Off,
-                    //     xPrefix: ForwardedTransformActions.Remove
-                    //     // ForwardedTransformActions? xFor = null,
-                    //     // ForwardedTransformActions? xHost = null,
-                    //     // ForwardedTransformActions? xProto = null,
-                    //     // ForwardedTransformActions? xPrefix = null
+                        //     // headerPrefix: ForwardedTransformActions.Remove,
+                        // xDefault: ForwardedTransformActions.Set,
+                        // xHost:
+                        xFor: ForwardedTransformActions.Append,
+                        xHost: ForwardedTransformActions.Append,
+                        xProto: ForwardedTransformActions.Append
+                        //     xPrefix: ForwardedTransformActions.Remove
+                        //     // ForwardedTransformActions? xFor = null,
+                        //     // ForwardedTransformActions? xHost = null,
+                        //     // ForwardedTransformActions? xProto = null,
+                        //     // ForwardedTransformActions? xPrefix = null
                     )
                     .WithTransformResponseHeader("X-Powered-By", "YARP");
             }
