@@ -26,9 +26,9 @@ var rabbitmq = builder
 var secret = builder.AddParameter("KeycloakClientSecret", secret: true);
 var keycloak = builder.AddKeycloak("keycloak-service")
     .WithRealmImport("./realms")
-    .WithArgs("--http-enabled=true")
+    // .WithArgs("--http-enabled=true")
     // .WithArgs("--optimized")
-    .WithArgs("--proxy-headers=xforwarded")
+    .WithArgs("--proxy-headers=forwarded")
     .WithArgs("--hostname-strict=false")
     .WithEnvironment("CLIENT_SECRET", secret)
     .WithOtlpExporter()
