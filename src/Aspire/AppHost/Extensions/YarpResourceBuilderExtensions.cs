@@ -1,4 +1,5 @@
 using Aspire.Hosting.Yarp;
+using Yarp.ReverseProxy.Transforms;
 
 namespace AppHost.Extensions;
 
@@ -15,6 +16,8 @@ internal static class YarpResourceBuilderExtensions
 
                 yarp.AddRoute($"/{name}/{{**catch-all}}", cluster)
                     .WithTransformPathRouteValues("/{**catch-all}")
+                    .WithTransformForwarded(useHost: true, useProto: true, forFormat: NodeFormat.IpAndPort,
+                        byFormat: NodeFormat.Random, action: ForwardedTransformActions.Append)
                     // .WithTransformRequestHeader("X-Forwarded-Host", "gateway.eshop.sy.com")
                     .WithTransformResponseHeader("X-Powered-By", "YARP");
             }
