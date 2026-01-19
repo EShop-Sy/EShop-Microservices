@@ -13,10 +13,9 @@ public static class Extensions
                 options.Audience = "store.api";
 
                 // Explicitly set the Authority for production
-                if (builder.Environment.IsProduction())
+                if (!builder.Environment.IsDevelopment())
                 {
-                    var url = builder.Configuration["KEYCLOAK_SERVICE_HTTPS"];
-                    options.Authority = $"{url}/realms/eshop";
+                    options.Authority = "https://keycloak-service.internal/realms/eshop";
                 }
 
                 // For development only - disable HTTPS metadata validation
