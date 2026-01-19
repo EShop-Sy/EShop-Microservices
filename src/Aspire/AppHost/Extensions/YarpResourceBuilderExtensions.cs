@@ -21,6 +21,7 @@ internal static class YarpResourceBuilderExtensions
                     .WithTransformResponseHeader("X-Powered-By", "YARP");
             }
         });
+
         return builder;
     }
 }
