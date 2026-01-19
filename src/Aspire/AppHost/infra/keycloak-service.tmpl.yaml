@@ -40,7 +40,7 @@ properties:
           - start
           - --import-realm
           - --http-enabled=true
-          - --proxy-headers=xforwarded
+          - --proxy-headers=forwarded
           - --hostname-strict=false
         env:
           - name: AZURE_CLIENT_ID
