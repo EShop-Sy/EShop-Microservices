@@ -17,7 +17,7 @@ public static class Extensions
                 {
                     var keycloakHost = builder.Configuration["KEYCLOAK_SERVICE_HTTP"]!.Replace("http://", "https://");
                     options.Authority = $"{keycloakHost}/realms/eshop";
-                    options.MetadataAddress = $"{keycloakHost}/.well-known/openid-configuration";
+                    options.MetadataAddress = $"{keycloakHost}/realms/eshop/.well-known/openid-configuration";
                 }
 
                 // For development only - disable HTTPS metadata validation
