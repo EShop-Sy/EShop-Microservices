@@ -24,37 +24,13 @@ var rabbitmq = builder
 
 // Authentication
 var secret = builder.AddParameter("KeycloakClientSecret", secret: true);
-var keycloak = builder.AddKeycloak("keycloak-service")
+var keycloak = builder.AddKeycloak("keycloak-service", 8080)
     .WithRealmImport("./realms")
     .WithArgs("--http-enabled=true")
     .WithArgs("--proxy-headers=forwarded")
     .WithArgs("--hostname=https://keycloak-service.internal")
     .WithEnvironment("CLIENT_SECRET", secret)
-
-    // .WithArgs("--hostname-strict=false")
-    // .WithArgs("--hostname-backchannel-dynamic=true")
-    // .WithHttpEndpoint(port: 8080, name: "http-endpoint")
-    // .withend
-    // .WithHttpEndpoint(port: 8080, name: "http-endpoint")
-    // .WithEndpointProxySupport(true)
-    .WithOtlpExporter()
     .WithIconName("KeyMultiple");
-// .WithArgs("--optimized")
-
-// .WithArgs("--hostname=localhost")
-// .WithHttpsEndpoint()
-// .WithHttpsEndpoint()
-
-// #pragma warning disable ASPIRECERTIFICATES001
-// var keycloak = builder.AddKeycloak("keycloak")
-//     .WithRealmImport("./realms")
-//     .WithEnvironment("CLIENT_SECRET", secret)
-//     .WithEnabledFeatures()
-//     .WithHttpsDeveloperCertificate()
-//     .WithDeveloperCertificateTrust(true)
-//     .WithOtlpExporter()
-//     .WithIconName("KeyMultiple");
-// #pragma warning restore ASPIRECERTIFICATES001
 
 // Projects
 var basket = builder.AddProject<Projects.Basket_API>("basket-service")
