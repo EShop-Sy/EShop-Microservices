@@ -16,9 +16,10 @@ internal static class YarpResourceBuilderExtensions
 
                 yarp.AddRoute($"/{name}/{{**catch-all}}", cluster)
                     .WithTransformPathRouteValues("/{**catch-all}")
-                    .WithTransformForwarded(useHost: true, useProto: true, forFormat: NodeFormat.IpAndPort,
-                        byFormat: NodeFormat.Random, action: ForwardedTransformActions.Append)
+                    // .WithTransformForwarded(useHost: true, useProto: true, forFormat: NodeFormat.IpAndPort, byFormat: NodeFormat.Random, action: ForwardedTransformActions.Append)
                     // .WithTransformRequestHeader("X-Forwarded-Host", "gateway.eshop.sy.com")
+                    .WithTransformRequestHeader("RequestHeader", "X-Forwarded-Proto")
+                    .WithTransformRequestHeader("Set", "https")
                     .WithTransformResponseHeader("X-Powered-By", "YARP");
             }
         });
