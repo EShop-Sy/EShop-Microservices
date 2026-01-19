@@ -39,6 +39,7 @@ properties:
         args:
           - start
           - --import-realm
+          - --http-enabled=true
         env:
           - name: AZURE_CLIENT_ID
             value: {{ .Env.MANAGED_IDENTITY_CLIENT_ID }}

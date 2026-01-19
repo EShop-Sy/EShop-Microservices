@@ -26,11 +26,11 @@ var rabbitmq = builder
 var secret = builder.AddParameter("KeycloakClientSecret", secret: true);
 var keycloak = builder.AddKeycloak("keycloak-service")
     .WithRealmImport("./realms")
+    .WithArgs("--http-enabled=true")
     .WithEnvironment("CLIENT_SECRET", secret)
     .WithOtlpExporter()
     .WithIconName("KeyMultiple");
 
-// .WithArgs("--http-enabled=true")
 // .WithArgs("--hostname=localhost")
 // .WithHttpsEndpoint()
 // .WithHttpsEndpoint()
