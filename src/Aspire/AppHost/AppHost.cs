@@ -27,15 +27,15 @@ var secret = builder.AddParameter("KeycloakClientSecret", secret: true);
 var keycloak = builder.AddKeycloak("keycloak-service")
     .WithRealmImport("./realms")
     .WithArgs("--http-enabled=true")
-    .WithArgs("--proxy-headers=forwarded")
+    .WithArgs("--proxy-headers=xforwarded")
     .WithArgs("--hostname-strict=false")
     .WithEnvironment("CLIENT_SECRET", secret)
     // .withend
-    .WithHttpEndpoint(port: 8080, name: "http-endpoint")
+    // .WithHttpEndpoint(port: 8080, name: "http-endpoint")
     // .WithEndpointProxySupport(true)
     .WithOtlpExporter()
     .WithIconName("KeyMultiple");
-    // .WithArgs("--optimized")
+// .WithArgs("--optimized")
 
 // .WithArgs("--hostname=localhost")
 // .WithHttpsEndpoint()
