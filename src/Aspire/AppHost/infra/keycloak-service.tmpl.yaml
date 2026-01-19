@@ -41,7 +41,7 @@ properties:
           - --import-realm
           - --http-enabled=true
           - --proxy-headers=forwarded
-          - --hostname=https://keycloak-service.internal.jollyground-0d1a883d.uaenorth.azurecontainerapps.io
+          - --hostname=https://keycloak-service.internal
         env:
           - name: AZURE_CLIENT_ID
             value: {{ .Env.MANAGED_IDENTITY_CLIENT_ID }}

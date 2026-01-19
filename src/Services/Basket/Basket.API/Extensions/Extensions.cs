@@ -16,8 +16,6 @@ public static class Extensions
 
         builder.AddDataServices();
 
-        // builder.AddRedisCache();
-
         builder.AddBroker();
 
         builder.Services.AddExceptionHandler<CustomExceptionHandler>();

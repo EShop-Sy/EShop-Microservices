@@ -28,10 +28,11 @@ var keycloak = builder.AddKeycloak("keycloak-service")
     .WithRealmImport("./realms")
     .WithArgs("--http-enabled=true")
     .WithArgs("--proxy-headers=forwarded")
-    .WithArgs("--hostname=https://keycloak-service.internal.jollyground-0d1a883d.uaenorth.azurecontainerapps.io")
+    .WithArgs("--hostname=https://keycloak-service.internal")
+    .WithEnvironment("CLIENT_SECRET", secret)
+
     // .WithArgs("--hostname-strict=false")
     // .WithArgs("--hostname-backchannel-dynamic=true")
-    .WithEnvironment("CLIENT_SECRET", secret)
     // .WithHttpEndpoint(port: 8080, name: "http-endpoint")
     // .withend
     // .WithHttpEndpoint(port: 8080, name: "http-endpoint")
