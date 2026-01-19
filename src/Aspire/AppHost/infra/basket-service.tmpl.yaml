@@ -52,8 +52,6 @@ properties:
             value: '{{ targetPortOrDefault 0 }}'
           - name: KEYCLOAK_SERVICE_HTTP
             value: http://keycloak-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
-          - name: KEYCLOAK_SERVICE_HTTP_ENDPOINT
-            value: http://keycloak-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
           - name: KEYCLOAK_SERVICE_MANAGEMENT
             value: http://keycloak-service:9000
           - name: MESSAGING_HOST
@@ -68,8 +66,6 @@ properties:
             value: "true"
           - name: OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY
             value: in_memory
-          - name: services__keycloak-service__http-endpoint__0
-            value: http://keycloak-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
           - name: services__keycloak-service__http__0
             value: http://keycloak-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
           - name: services__keycloak-service__management__0
