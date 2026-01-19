@@ -39,6 +39,7 @@ properties:
         args:
           - start
           - --import-realm
+          - --http-enabled=true
           - --proxy-headers=forwarded
           - --hostname-strict=false
         env:
