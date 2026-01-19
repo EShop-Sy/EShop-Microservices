@@ -51,7 +51,7 @@ properties:
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__0__PathPattern
             value: /{**catch-all}
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__Action
-            value: Set
+            value: Append
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__ByFormat
             value: Random
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__ForFormat
@@ -71,7 +71,7 @@ properties:
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__0__PathPattern
             value: /{**catch-all}
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__Action
-            value: Set
+            value: Append
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__ByFormat
             value: Random
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__ForFormat
