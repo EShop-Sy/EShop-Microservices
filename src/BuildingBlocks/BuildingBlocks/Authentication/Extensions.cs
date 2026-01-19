@@ -7,7 +7,7 @@ public static class Extensions
 {
     public static TBuilder AddKeycloak<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
-        builder.Services.AddAuthentication().AddKeycloakJwtBearer(serviceName: "keycloak-auth-service", realm: "eshop",
+        builder.Services.AddAuthentication().AddKeycloakJwtBearer(serviceName: "keycloak-service", realm: "eshop",
             options =>
             {
                 options.Audience = "store.api";
