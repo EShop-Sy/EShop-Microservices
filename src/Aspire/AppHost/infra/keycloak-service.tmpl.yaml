@@ -40,7 +40,6 @@ properties:
           - start
           - --import-realm
           - --http-enabled=true
-          - --optimized
           - --proxy-headers=forwarded
           - --hostname-strict=false
         env:
