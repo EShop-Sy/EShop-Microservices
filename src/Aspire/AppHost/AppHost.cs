@@ -28,6 +28,8 @@ var keycloak = builder.AddKeycloak("keycloak-service", 8080)
     .WithRealmImport("./realms")
     .WithArgs("--http-enabled=true")
     .WithArgs("--proxy-headers=forwarded")
+    .WithArgs("--hostname-strict=false")
+    .WithArgs("--hostname-backchannel-dynamic=false")
     // .WithArgs("--hostname=https://keycloak-service.internal.jollyground-0d1a883d.uaenorth.azurecontainerapps.io")
     .WithEnvironment("CLIENT_SECRET", secret)
     .WithIconName("KeyMultiple");
