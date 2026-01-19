@@ -50,8 +50,16 @@ properties:
             value: /basket/{**catch-all}
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__0__PathPattern
             value: /{**catch-all}
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__For
+            value: Append
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__HeaderPrefix
             value: X-Forwarded-
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__Host
+            value: Append
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__Prefix
+            value: Remove
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__Proto
+            value: "Off"
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__X-Forwarded
             value: Set
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__2__Append
@@ -66,8 +74,16 @@ properties:
             value: /keycloak/{**catch-all}
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__0__PathPattern
             value: /{**catch-all}
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__For
+            value: Append
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__HeaderPrefix
             value: X-Forwarded-
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__Host
+            value: Append
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__Prefix
+            value: Remove
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__Proto
+            value: "Off"
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__X-Forwarded
             value: Set
           - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__2__Append
