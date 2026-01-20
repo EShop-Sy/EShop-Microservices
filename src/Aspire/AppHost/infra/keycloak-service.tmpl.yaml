@@ -32,7 +32,7 @@ properties:
     volumes:
       - name: keycloak-service-bm0
         storageType: AzureFile
-        storageName: {{ .Env.SERVICE_KEYCLOAK_SERVICE_VOLUME_BM0_NAME }} 
+        storageName: {{ .Env.SERVICE_KEYCLOAK_SERVICE_VOLUME_BM0_NAME }}
     containers:
       - image: {{ .Image }}
         name: keycloak-service
@@ -41,7 +41,7 @@ properties:
           - --import-realm
           - --http-enabled=true
           - --proxy-headers=forwarded
-          - --hostname=https://keycloak-service.internal.{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }
+          - --hostname=https://keycloak-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
         env:
           - name: AZURE_CLIENT_ID
             value: {{ .Env.MANAGED_IDENTITY_CLIENT_ID }}
