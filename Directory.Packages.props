@@ -1,0 +1,74 @@
+<Project>
+  <PropertyGroup>
+    <!-- Enable central package management, https://learn.microsoft.com/en-us/nuget/consume-packages/Central-Package-Management -->
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageVersion Include="Aspire.Azure.Npgsql" Version="13.1.0"/>
+    <PackageVersion Include="Aspire.Azure.Security.KeyVault" Version="13.0.0"/>
+    <PackageVersion Include="Aspire.Azure.Storage.Blobs" Version="13.1.0"/>
+    <PackageVersion Include="Aspire.Hosting.AppHost" Version="13.1.0"/>
+    <PackageVersion Include="Aspire.Hosting.Azure.PostgreSQL" Version="13.1.0"/>
+    <PackageVersion Include="Aspire.Hosting.Azure.Redis" Version="13.1.0"/>
+    <PackageVersion Include="Aspire.Hosting.Azure.Storage" Version="13.1.0"/>
+    <PackageVersion Include="Aspire.Hosting.Keycloak" Version="13.1.0-preview.1.25616.3"/>
+    <PackageVersion Include="Aspire.Hosting.Kubernetes" Version="13.1.0-preview.1.25616.3"/>
+    <PackageVersion Include="Aspire.Hosting.PostgreSQL" Version="13.1.0"/>
+    <PackageVersion Include="Aspire.Hosting.RabbitMQ" Version="13.1.0"/>
+    <PackageVersion Include="Aspire.Hosting.Redis" Version="13.1.0"/>
+    <PackageVersion Include="Aspire.Hosting.Yarp" Version="13.1.0"/>
+    <PackageVersion Include="Aspire.Keycloak.Authentication" Version="13.1.0-preview.1.25616.3"/>
+    <PackageVersion Include="Aspire.Microsoft.Extensions.Configuration.AzureAppConfiguration" Version="13.1.0"/>
+    <PackageVersion Include="Aspire.Npgsql" Version="13.1.0"/>
+    <PackageVersion Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="13.1.0"/>
+    <PackageVersion Include="Aspire.StackExchange.Redis" Version="13.1.0"/>
+    <PackageVersion Include="Aspire.StackExchange.Redis.DistributedCaching" Version="13.1.0"/>
+    <PackageVersion Include="Bogus" Version="35.6.5"/>
+    <PackageVersion Include="Carter" Version="10.0.0"/>
+    <PackageVersion Include="Dapper" Version="2.1.66"/>
+    <PackageVersion Include="Dapper.AOT" Version="1.0.48"/>
+    <PackageVersion Include="FluentValidation" Version="12.1.1"/>
+    <PackageVersion Include="FluentValidation.AspNetCore" Version="11.3.1"/>
+    <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1"/>
+    <PackageVersion Include="linq2db" Version="6.1.0"/>
+    <PackageVersion Include="linq2db.Extensions" Version="6.1.0"/>
+    <PackageVersion Include="linq2db.PostgreSQL" Version="6.1.0"/>
+    <PackageVersion Include="Mapster" Version="9.0.0-pre01"/>
+    <PackageVersion Include="Marten" Version="8.17.0"/>
+    <PackageVersion Include="MassTransit" Version="9.0.0-develop.33"/>
+    <PackageVersion Include="MassTransit.RabbitMQ" Version="9.0.0-develop.28"/>
+    <PackageVersion Include="MediatR" Version="14.0.0"/>
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication" Version="2.3.0"/>
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2"/>
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="5.0.0"/>
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.0.0"/>
+    <PackageVersion Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="5.0.0"/>
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.1"/>
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageVersion>
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.1"/>
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tasks" Version="10.0.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageVersion>
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.1"/>
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.1.0"/>
+    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="10.1.0"/>
+    <PackageVersion Include="Microsoft.FeatureManagement" Version="4.4.0"/>
+    <PackageVersion Include="Npgsql" Version="10.0.1"/>
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0"/>
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.14.0"/>
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.14.0"/>
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.14.0"/>
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.14.0"/>
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.14.0"/>
+    <PackageVersion Include="Scrutor" Version="7.0.0"/>
+    <PackageVersion Include="TUnit" Version="1.5.80"/>
+    <PackageVersion Include="Aspire.Hosting.Testing" Version="13.1.0"/>
+  </ItemGroup>
+</Project>

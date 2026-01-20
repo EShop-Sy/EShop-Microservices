@@ -5,8 +5,17 @@
       "principalId": {
         "value": "${AZURE_PRINCIPAL_ID}"
       },
-      "ApiKeySecret": {
-        "value": "${AZURE_API_KEY_SECRET}"
+      "KeycloakClientSecret": {
+        "value": "${AZURE_KEYCLOAK_CLIENT_SECRET}"
+      },
+      "RabbitMQPassword": {
+        "value": "${AZURE_RABBIT_MQPASSWORD}"
+      },
+      "RabbitMQUserName": {
+        "value": "${AZURE_RABBIT_MQUSER_NAME}"
+      },
+      "keycloak_service_password": {
+        "value": "${AZURE_KEYCLOAK_SERVICE_PASSWORD}"
       },
       "environmentName": {
         "value": "${AZURE_ENV_NAME}"

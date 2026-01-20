@@ -45,6 +45,40 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10
   tags: tags
 }
 
+resource storageVolume 'Microsoft.Storage/storageAccounts@2022-05-01' = {
+  name: 'vol${resourceToken}'
+  location: location
+  kind: 'StorageV2'
+  sku: {
+    name: 'Standard_LRS'
+  }
+  properties: {
+    largeFileSharesState: 'Enabled'
+  }
+}
+
+resource storageVolumeFileService 'Microsoft.Storage/storageAccounts/fileServices@2022-05-01' = {
+  parent: storageVolume
+  name: 'default'
+}
+resource volumesAccountRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(storageVolume.id, principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '69566ab7-960f-475b-8e7c-b3118f30c6bd'))
+  scope: storageVolume
+  properties: {
+    principalId: principalId
+    roleDefinitionId:  subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '69566ab7-960f-475b-8e7c-b3118f30c6bd')
+  }
+}
+
+resource keycloakServiceBm0FileShare 'Microsoft.Storage/storageAccounts/fileServices/shares@2022-05-01' = {
+  parent: storageVolumeFileService
+  name: take('${toLower('keycloak-service')}-${toLower('bm0')}', 60)
+  properties: {
+    shareQuota: 1024
+    enabledProtocols: 'SMB'
+  }
+}
+
 resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2024-02-02-preview' = {
   name: 'cae-${resourceToken}'
   location: location
@@ -72,6 +106,19 @@ resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2024-02-02-p
 
 }
 
+resource keycloakServiceBm0Store 'Microsoft.App/managedEnvironments/storages@2023-05-01' = {
+  parent: containerAppEnvironment
+  name: take('${toLower('keycloak-service')}-${toLower('bm0')}', 32)
+  properties: {
+    azureFile: {
+      shareName: keycloakServiceBm0FileShare.name
+      accountName: storageVolume.name
+      accountKey: storageVolume.listKeys().keys[0].value
+      accessMode: 'ReadOnly'
+    }
+  }
+}
+
 output MANAGED_IDENTITY_CLIENT_ID string = managedIdentity.properties.clientId
 output MANAGED_IDENTITY_NAME string = managedIdentity.name
 output MANAGED_IDENTITY_PRINCIPAL_ID string = managedIdentity.properties.principalId
@@ -83,3 +130,6 @@ output AZURE_CONTAINER_REGISTRY_NAME string = containerRegistry.name
 output AZURE_CONTAINER_APPS_ENVIRONMENT_NAME string = containerAppEnvironment.name
 output AZURE_CONTAINER_APPS_ENVIRONMENT_ID string = containerAppEnvironment.id
 output AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN string = containerAppEnvironment.properties.defaultDomain
+output SERVICE_KEYCLOAK_SERVICE_VOLUME_BM0_NAME string = keycloakServiceBm0Store.name
+output SERVICE_KEYCLOAK_SERVICE_FILE_SHARE_BM0_NAME string = keycloakServiceBm0FileShare.name
+output AZURE_VOLUMES_STORAGE_ACCOUNT string = storageVolume.name

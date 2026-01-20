@@ -1,0 +1,6 @@
+{
+  "features": {
+    "execCommandEnabled": "true"
+  },
+  "appHostPath": "../src/Aspire/AppHost/AppHost.csproj"
+}

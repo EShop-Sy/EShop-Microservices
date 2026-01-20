@@ -1,19 +1,18 @@
-name: Deploy 🚀
-
-# Run when commits are pushed to feature/*
+# Run when commits are pushed to feature/catalog
 on:
   workflow_dispatch:
   push:
     # Run when commits are pushed to mainline branch (main or master)
     # Set this to the mainline branch you are using
     branches:
-      - feature/*
+      - feature/catalog
 
 # Set up permissions for deploying with secretless Azure federated credentials
 # https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#set-up-azure-login-with-openid-connect-authentication
 permissions:
   id-token: write
   contents: read
+
 
 jobs:
   build:
@@ -22,17 +21,19 @@ jobs:
       AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
       AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
       AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-      AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
       AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
+      AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+
       - name: Install azd
         uses: Azure/setup-azd@v2
+
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 9.x.x
+          global-json-file: ./global.json
 
       - name: Log in with Azure (Federated Credentials)
         run: |
@@ -43,11 +44,20 @@ jobs:
         shell: pwsh
 
       - name: Provision Infrastructure
-        run: azd provision --no-prompt
+        run: |
+          azd config set alpha.azd.operations on
+          azd provision --no-prompt
         env:
-          AZURE_API_KEY_SECRET: ${{ secrets.AZURE_API_KEY_SECRET }}
+          AZURE_KEYCLOAK_PASSWORD: ${{ secrets.AZURE_KEYCLOAK_PASSWORD }}
+          AZURE_KEYCLOAK_CLIENT_SECRET: ${{ secrets.AZURE_KEYCLOAK_CLIENT_SECRET }}
+          AZURE_RABBIT_MQPASSWORD: ${{ secrets.AZURE_RABBIT_MQPASSWORD }}
+          AZURE_RABBIT_MQUSER_NAME: ${{ secrets.AZURE_RABBIT_MQUSER_NAME }}
 
       - name: Deploy Application
         run: azd deploy --no-prompt
         env:
-          AZURE_API_KEY_SECRET: ${{ secrets.AZURE_API_KEY_SECRET }}
+          AZURE_KEYCLOAK_PASSWORD: ${{ secrets.AZURE_KEYCLOAK_PASSWORD }}
+          AZURE_KEYCLOAK_CLIENT_SECRET: ${{ secrets.AZURE_KEYCLOAK_CLIENT_SECRET }}
+          AZURE_RABBIT_MQPASSWORD: ${{ secrets.AZURE_RABBIT_MQPASSWORD }}
+          AZURE_RABBIT_MQUSER_NAME: ${{ secrets.AZURE_RABBIT_MQUSER_NAME }}
+

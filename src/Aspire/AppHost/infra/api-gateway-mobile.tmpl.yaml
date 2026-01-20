@@ -32,28 +32,66 @@ properties:
             value: {{ .Env.MANAGED_IDENTITY_CLIENT_ID }}
           - name: ASPNETCORE_ENVIRONMENT
             value: Development
-          - name: REVERSEPROXY__CLUSTERS__cluster_basket__DESTINATIONS__destination1__ADDRESS
-            value: https+http://basket
+          - name: BASKET_SERVICE_HTTP
+            value: http://basket-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: BASKET_SERVICE_HTTPS
+            value: https://basket-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: KEYCLOAK_SERVICE_HTTP
+            value: http://keycloak-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: KEYCLOAK_SERVICE_MANAGEMENT
+            value: http://keycloak-service:9000
+          - name: REVERSEPROXY__CLUSTERS__cluster_basket-service__DESTINATIONS__destination1__ADDRESS
+            value: https+http://basket-service
+          - name: REVERSEPROXY__CLUSTERS__cluster_keycloak-service__DESTINATIONS__destination1__ADDRESS
+            value: http://keycloak-service
           - name: REVERSEPROXY__ROUTES__route0__CLUSTERID
-            value: cluster_basket
+            value: cluster_basket-service
           - name: REVERSEPROXY__ROUTES__route0__MATCH__PATH
             value: /basket/{**catch-all}
-          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__0__PathRemovePrefix
-            value: /basket
-          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__Append
-            value: gateway.eshop.sy.com
-          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__RequestHeader
-            value: X-Forwarded-Host
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__0__PathPattern
+            value: /{**catch-all}
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__Action
+            value: Append
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__ByFormat
+            value: Random
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__ForFormat
+            value: IpAndPort
+          - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__1__Forwarded
+            value: For,By,Host,Proto
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__2__Append
             value: YARP
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__2__ResponseHeader
             value: X-Powered-By
           - name: REVERSEPROXY__ROUTES__route0__TRANSFORMS__2__When
             value: Success
-          - name: services__basket__http__0
-            value: http://basket.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
-          - name: services__basket__https__0
-            value: https://basket.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: REVERSEPROXY__ROUTES__route1__CLUSTERID
+            value: cluster_keycloak-service
+          - name: REVERSEPROXY__ROUTES__route1__MATCH__PATH
+            value: /keycloak/{**catch-all}
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__0__PathPattern
+            value: /{**catch-all}
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__Action
+            value: Append
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__ByFormat
+            value: Random
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__ForFormat
+            value: IpAndPort
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__1__Forwarded
+            value: For,By,Host,Proto
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__2__Append
+            value: YARP
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__2__ResponseHeader
+            value: X-Powered-By
+          - name: REVERSEPROXY__ROUTES__route1__TRANSFORMS__2__When
+            value: Success
+          - name: services__basket-service__http__0
+            value: http://basket-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: services__basket-service__https__0
+            value: https://basket-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: services__keycloak-service__http__0
+            value: http://keycloak-service.internal.{{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN }}
+          - name: services__keycloak-service__management__0
+            value: http://keycloak-service:9000
     scale:
       minReplicas: 1
 tags:

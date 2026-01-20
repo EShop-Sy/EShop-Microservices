@@ -13,7 +13,18 @@ param location string
 param principalId string = ''
 
 @secure()
-param ApiKeySecret string
+param KeycloakClientSecret string
+@secure()
+param RabbitMQPassword string
+@secure()
+param RabbitMQUserName string
+@metadata({azd: {
+  type: 'generate'
+  config: {length:22}
+  }
+})
+@secure()
+param keycloak_service_password string
 
 var tags = {
   'azd-env-name': environmentName
@@ -34,21 +45,21 @@ module resources 'resources.bicep' = {
   }
 }
 
-module key_vault 'key-vault/key-vault.module.bicep' = {
-  name: 'key-vault'
+module postgres 'postgres/postgres.module.bicep' = {
+  name: 'postgres'
   scope: rg
   params: {
-    apikeysecret_value: ApiKeySecret
     location: location
   }
 }
-module key_vault_roles 'key-vault-roles/key-vault-roles.module.bicep' = {
-  name: 'key-vault-roles'
+module postgres_roles 'postgres-roles/postgres-roles.module.bicep' = {
+  name: 'postgres-roles'
   scope: rg
   params: {
-    key_vault_outputs_name: key_vault.outputs.name
     location: location
+    postgres_outputs_name: postgres.outputs.name
     principalId: resources.outputs.MANAGED_IDENTITY_PRINCIPAL_ID
+    principalName: resources.outputs.MANAGED_IDENTITY_NAME
     principalType: 'ServicePrincipal'
   }
 }
@@ -62,4 +73,8 @@ output AZURE_CONTAINER_REGISTRY_NAME string = resources.outputs.AZURE_CONTAINER_
 output AZURE_CONTAINER_APPS_ENVIRONMENT_NAME string = resources.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_NAME
 output AZURE_CONTAINER_APPS_ENVIRONMENT_ID string = resources.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_ID
 output AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN string = resources.outputs.AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN
-output KEY_VAULT_VAULTURI string = key_vault.outputs.vaultUri
+output SERVICE_KEYCLOAK_SERVICE_VOLUME_BM0_NAME string = resources.outputs.SERVICE_KEYCLOAK_SERVICE_VOLUME_BM0_NAME
+output SERVICE_KEYCLOAK_SERVICE_FILE_SHARE_BM0_NAME string = resources.outputs.SERVICE_KEYCLOAK_SERVICE_FILE_SHARE_BM0_NAME
+output AZURE_VOLUMES_STORAGE_ACCOUNT string = resources.outputs.AZURE_VOLUMES_STORAGE_ACCOUNT
+output POSTGRES_CONNECTIONSTRING string = postgres.outputs.connectionString
+output POSTGRES_HOSTNAME string = postgres.outputs.hostName
